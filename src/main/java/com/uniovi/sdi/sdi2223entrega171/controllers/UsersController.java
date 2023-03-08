@@ -1,6 +1,7 @@
 package com.uniovi.sdi.sdi2223entrega171.controllers;
 
 import com.uniovi.sdi.sdi2223entrega171.entities.User;
+import com.uniovi.sdi.sdi2223entrega171.services.RolesService;
 import com.uniovi.sdi.sdi2223entrega171.services.SecurityService;
 import com.uniovi.sdi.sdi2223entrega171.services.UsersService;
 import com.uniovi.sdi.sdi2223entrega171.validators.SignUpFormValidator;
@@ -18,7 +19,8 @@ public class UsersController {
 
     @Autowired
     private SignUpFormValidator signUpFormValidator;
-
+    @Autowired
+    private RolesService rolesService;
     @Autowired
     private SecurityService securityService;
     @Autowired
@@ -29,6 +31,7 @@ public class UsersController {
         if(result.hasErrors()) {
             return "signup";
         }
+        user.setRole(rolesService.getRoles()[0]);
         usersService.addUser(user);
         return "redirect:home";
     }
