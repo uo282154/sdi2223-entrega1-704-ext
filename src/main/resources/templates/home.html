@@ -8,7 +8,7 @@
     <h2>Menu principal</h2>
     <h3>Opciones de usuario registrado:</h3>
     <p>Usuario Autenticado como :</p>
-    <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+    <b th:inline="text" sec:authentication="principal.username"></b>
 </div>
 <footer th:replace="fragments/footer"/>
 </body>

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,11 @@ public class UsersService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @PostConstruct
     public void init() {
+    }
+    private final HttpSession httpSession;
+    @Autowired
+    public UsersService(HttpSession httpSession) {
+        this.httpSession = httpSession;
     }
 
     public List<User> getUsers() {
