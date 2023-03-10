@@ -8,4 +8,8 @@ public class RolesService {
     public String[] getRoles() {
         return roles;
     }
+
+    String[] offerStatus = {"ACTIVE", "FINISH"};
+
+    public String[] getOfferStatus() {return offerStatus;}
 }
