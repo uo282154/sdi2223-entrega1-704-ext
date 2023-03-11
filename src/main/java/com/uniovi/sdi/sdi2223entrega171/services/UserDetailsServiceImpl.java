@@ -31,14 +31,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     /**
      * Mñetodo que devuelve el usuario que esta activo en el sistema
-     * @param model
      * @return, usuario acitvo
      */
-    public User getActiveUser(Model model){
+    public User getActiveUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = usersRepository.findByEmail(email);
-        model.addAttribute("activeUser", user);
         return user;
     }
 }

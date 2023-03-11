@@ -60,6 +60,8 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+    public double getMoney() { return this.money; }
+    public void setMoney(double money) {this.money = money;}
 
     public String getFullName() {
         return this.name + " " + this.surname;
