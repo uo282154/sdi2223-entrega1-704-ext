@@ -1,5 +1,6 @@
 package com.uniovi.sdi.sdi2223entrega171.services;
 
+import com.uniovi.sdi.sdi2223entrega171.entities.Offer;
 import com.uniovi.sdi.sdi2223entrega171.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ public class InsertSampleDataService {
 
     @Autowired
     private RolesService rolesService;
+
+    @Autowired
+    private  OffersService offersService;
+
     @PostConstruct
     public void init() {
         User user1 = new User("admin@gmail.com", "Admin", "Admin");
@@ -40,6 +45,19 @@ public class InsertSampleDataService {
         usersService.addUser(user4);
         usersService.addUser(user5);
 
+
+        Offer offer1 = new Offer("Oferta 1", "Oferta para los más entusiastas", 40);
+        offer1.setStatus(rolesService.getOfferStatus()[0]);
+        Offer offer2 = new Offer("Oferta 2", "Oferta para los más locos", 50);
+        offer2.setStatus(rolesService.getOfferStatus()[0]);
+        Offer offer3 = new Offer("Oferta 3", "Oferta tímida", 22);
+        offer3.setStatus(rolesService.getOfferStatus()[0]);
+        //Offer offer4 = new Offer("Oferta 4", "Ofertón, sin más", 10);
+        //offer4.setStatus(rolesService.getOfferStatus()[0]);
+
+        offersService.addOffer(offer1);
+        offersService.addOffer(offer2);
+        offersService.addOffer(offer3);
     }
 
 }

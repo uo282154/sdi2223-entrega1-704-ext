@@ -28,6 +28,18 @@
                     Listar usuarios
                 </a>
             </li>
+            <li class="nav-item" >
+                <a class="nav-link" href="/offer/list">
+                    <i class='fas fa-user-alt' style='font-size:16px'></i>
+                    Ofertas
+                </a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                <a class="nav-link" href="/chat/list">
+                    <i class='fas fa-user-alt' style='font-size:16px'></i>
+                    Chats
+                </a>
+            </li>
         </ul>
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item dropdown">
