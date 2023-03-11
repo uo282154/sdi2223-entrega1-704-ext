@@ -3,6 +3,7 @@ package com.uniovi.sdi.sdi2223entrega171.controllers;
 import com.uniovi.sdi.sdi2223entrega171.entities.User;
 import com.uniovi.sdi.sdi2223entrega171.services.RolesService;
 import com.uniovi.sdi.sdi2223entrega171.services.SecurityService;
+import com.uniovi.sdi.sdi2223entrega171.services.UserDetailsServiceImpl;
 import com.uniovi.sdi.sdi2223entrega171.services.UsersService;
 import com.uniovi.sdi.sdi2223entrega171.validators.SignUpFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UsersController {
@@ -23,6 +27,8 @@ public class UsersController {
     private RolesService rolesService;
     @Autowired
     private SecurityService securityService;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
     @Autowired
     private UsersService usersService;
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -45,13 +51,15 @@ public class UsersController {
         return "login";
     }
     @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("user", userDetailsService.getActiveUser());
         return "home";
     }
 
     @RequestMapping("/user/list")
     public String getList(Model model) {
         model.addAttribute("usersList", usersService.getUsers());
+        model.addAttribute("user", userDetailsService.getActiveUser());
         return "user/list";
     }
     @RequestMapping(value = "/user/add")
@@ -66,17 +74,20 @@ public class UsersController {
     @RequestMapping("/user/details/{id}")
     public String getDetail(Model model, @PathVariable Long id) {
         model.addAttribute("user", usersService.getUser(id));
+        model.addAttribute("user", userDetailsService.getActiveUser());
         return "user/details";
     }
-    @RequestMapping("/user/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        usersService.deleteUser(id);
+    @RequestMapping(value = "/user/delete", method = RequestMethod.POST)
+    public String delete(HttpServletRequest request) {
+        for(String id : request.getParameterMap().keySet())
+            usersService.deleteUser(Long.parseLong(id));
         return "redirect:/user/list";
     }
     @RequestMapping(value = "/user/edit/{id}")
     public String getEdit(Model model, @PathVariable Long id) {
         User user = usersService.getUser(id);
         model.addAttribute("user", user);
+        model.addAttribute("user", userDetailsService.getActiveUser());
         return "user/edit";
     }
     @RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)

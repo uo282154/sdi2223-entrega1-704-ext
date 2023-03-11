@@ -23,6 +23,8 @@ public class OfferController {
     @Autowired
     private OffersService offersService;
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
     /**
      * Devuelve una lista con todas las ofertas
      * @param model
@@ -53,7 +55,7 @@ public class OfferController {
 
         //List<Offer> offersMyList = offersService.getMyOffers(activeUser);
         //model.addAttribute("myOffers", offersMyList);
-
+        model.addAttribute("user", userDetailsService.getActiveUser());
         return "offer/list";
     }
 
