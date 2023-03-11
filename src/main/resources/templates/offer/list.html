@@ -37,7 +37,11 @@
                 <td scope="row" th:text="${offer.price}">2€</td>
                 <td scope="row" th:text="${offer.status}">ACTIVE</td>
                 <td scope="row" th:text="${offer.createAt}">01/01/2023</td>
-                <!--<td scope="row" ><a th:href="${'/chat/' + offer.creator.id}">Iniciar conversacion</a></td> AQUI IRIA LA URL PARA MANDAR MENSAJES (con offer.creator.id)-->
+                <td>
+                    <button type="button" th:id="${'conversation' + offer.id}" class="btn btn-info">
+                        Iniciar Conversación
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>
