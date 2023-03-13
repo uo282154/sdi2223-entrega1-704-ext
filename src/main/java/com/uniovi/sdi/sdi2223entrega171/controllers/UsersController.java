@@ -47,8 +47,14 @@ public class UsersController {
         return "signup";
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
-        return "login";
+    public String login(Model model, String error, String logout) {
+        if (error != null) {
+            model.addAttribute("error", "Error al introducir las credenciales");
+        }
+        if (logout != null) {
+            model.addAttribute("message", "Sesión cerrada correctamente");
+        }
+        return "/login";
     }
     @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
     public String home(Model model) {
