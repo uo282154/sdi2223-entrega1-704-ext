@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary"
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
     <a class="navbar-brand" href="#"></a>
-   <!-- <img src="/images/logo-wallapop.png" alt="logo"/> -->
+    <!-- <img src="/images/logo-wallapop.png" alt="logo"/> -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar"
             aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,30 +10,30 @@
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
             <li class="nav-item ">
-                <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/home"><span th:text="#{nav.home}"></span><span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item " sec:authorize="isAuthenticated()">
                 <a class="nav-link">
-                    User: <b th:text="${user.email}"></b>
-                    Money: <b th:text="${user.money}"></b>
+                    <span th:text="#{nav.user}"> </span><b th:text="${user.email}"></b>
+                    <span th:text="#{nav.credit}"> </span><b th:text="${user.money}"></b>
                 </a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link" href="/signup">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    Mis ofertas
+                    <span th:text="#{nav.myoffers}"></span>
                 </a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" href="/user/list">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    Listar usuarios
+                    <span th:text="#{nav.users}"></span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/offer/list">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    Ofertas
+                    <span th:text="#{nav.offers}"></span>
                 </a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
@@ -77,7 +77,7 @@
             <li sec:authorize="isAuthenticated()" class="nav-item">
                 <a class="nav-link" href="/logout">
                     <i class='fas fa-sign-out-alt' style='font-size:16px'></i>
-                    <span>Desconectar</span>
+                    <span th:text="#{nav.logout}"></span>
                 </a>
             </li>
         </ul>

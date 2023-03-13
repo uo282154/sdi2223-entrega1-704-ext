@@ -5,9 +5,8 @@
 <body>
 <nav th:replace="fragments/nav"/>
 <div class="container" style="text-align: center">
-    <h2>Menu principal</h2>
-    <h3>Opciones de usuario registrado:</h3>
-    <p>Usuario Autenticado como :</p>
+    <h2 th:text="#{home.home}"></h2>
+    <p><span th:text="#{home.id}"></span></p>
     <b th:inline="text" sec:authentication="principal.username"></b>
 </div>
 <footer th:replace="fragments/footer"/>
