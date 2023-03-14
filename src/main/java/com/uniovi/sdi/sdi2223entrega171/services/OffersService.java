@@ -40,4 +40,13 @@ public class OffersService {
     public List<Offer> getSoldOffers(User user) {
         return offerRepository.findSoldOffers(user);
     }
+
+    public Offer getOfferByTitle(String title) {
+        return offerRepository.findOfferByTitle(title);
+    }
+
+    public void deleteOffer(Long id) {
+
+        offerRepository.deleteById(id);
+    }
 }

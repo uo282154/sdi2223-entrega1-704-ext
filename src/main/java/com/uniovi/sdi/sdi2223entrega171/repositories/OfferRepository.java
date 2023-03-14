@@ -21,4 +21,7 @@ public interface OfferRepository extends CrudRepository<Offer, Long> {
 
     @Query("SELECT o FROM Offer o WHERE o.buyer = ?1")
     List<Offer> findSoldOffers(User user);
+
+    @Query("SELECT o FROM Offer o WHERE o.title = ?1")
+    Offer findOfferByTitle(String title);
 }

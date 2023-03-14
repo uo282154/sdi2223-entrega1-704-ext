@@ -28,17 +28,22 @@
                     Listar usuarios
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/offer/list">
-                    <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    Ofertas
-                </a>
-            </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link" href="/chat/list">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
                     Chats
                 </a>
+            </li>
+
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="offerDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" > Ofertas
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a sec:authorize="isAuthenticated()" class="dropdown-item" href="/offer/list">Ver ofertas</a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/offer/add">Añadir oferta</a>
+                </div>
+
             </li>
         </ul>
         <ul class="navbar-nav justify-content-end">
