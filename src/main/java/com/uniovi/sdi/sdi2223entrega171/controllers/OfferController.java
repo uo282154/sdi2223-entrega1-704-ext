@@ -80,7 +80,7 @@ public class OfferController {
         if(result.hasErrors()) {
             return "offer/add";
         }
-
+        offer.setCreator( userDetailsService.getActiveUser());
         offersService.addOffer(offer);
         model.addAttribute("user", userDetailsService.getActiveUser());
         return "redirect:/offer/my";
@@ -94,9 +94,7 @@ public class OfferController {
      */
     @RequestMapping(value = "/offer/add", method = RequestMethod.GET)
     public String add(Model model) {
-        Offer o=new Offer();
-        o.setCreator( userDetailsService.getActiveUser());
-        model.addAttribute("offer", o);
+        model.addAttribute("offer", new Offer());
         model.addAttribute("user", userDetailsService.getActiveUser());
 
         return "offer/add";
@@ -127,18 +125,20 @@ public class OfferController {
     public String getListAll(Model model, Pageable pageable, Principal principal,
                           @RequestParam(value ="", required = false) String searchText){
         Page<Offer> offerPage = new PageImpl<Offer>(new LinkedList<Offer>());
-
+    User user=userDetailsService.getActiveUser();
         if (searchText != null && !searchText.isEmpty()){
-            offerPage = offersService.getAllOffersByTitle(pageable, searchText);
+            //offerPage = offersService.getAllOffersByTitle(pageable, searchText);
+            offerPage=offersService.getAllExceptUserOnesByTitle(pageable,user,searchText);
         }
         else{
-            offerPage = offersService.getAllOffers(pageable);
+            //offerPage = offersService.getAllOffers(pageable);
+            offerPage=offersService.getAllExceptUserOnes(pageable,user);
         }
         model.addAttribute("offersList", offerPage.getContent());
         model.addAttribute("page", offerPage);
 
         model.addAttribute("user", userDetailsService.getActiveUser());
-        return "offer/list";
+        return "offer/listAll";
     }
 
 

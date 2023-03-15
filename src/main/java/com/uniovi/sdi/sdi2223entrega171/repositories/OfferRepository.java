@@ -27,4 +27,10 @@ public interface OfferRepository extends CrudRepository<Offer, Long> {
 
     @Query("SELECT o FROM Offer o WHERE o.title = ?1")
     Offer findOfferByTitle(String title);
+
+    @Query("SELECT o FROM Offer o WHERE o.creator != ?1")
+    Page<Offer> findAllExceptUserOnes(Pageable pageable,User user);
+
+    @Query("SELECT o FROM Offer o WHERE (LOWER(o.title) LIKE LOWER(?2)) and o.creator!=?1")
+    Page<Offer> searchAllExceptUserOnesByTitle(Pageable pageable, User user,String searchText);
 }

@@ -18,11 +18,11 @@ public class OffersService {
     @Autowired
     private OfferRepository offerRepository;
 
-    public Page<Offer> getAllOffers(Pageable pageable){
+    public Page<Offer> getAllOffers(Pageable pageable) {
         return offerRepository.findAll(pageable);
     }
 
-    public Page<Offer> getMyOffersByTitle(Pageable pageable, String searchText, User user){
+    public Page<Offer> getMyOffersByTitle(Pageable pageable, String searchText, User user) {
         Page<Offer> offerPage = new PageImpl<Offer>(new LinkedList<Offer>());
         searchText = "%" + searchText + "%";
         System.out.println(user);
@@ -30,11 +30,11 @@ public class OffersService {
         return offerPage;
     }
 
-    public void addOffer(Offer offer){
+    public void addOffer(Offer offer) {
         offerRepository.save(offer);
     }
 
-    public Page<Offer> getAllOffersByTitle(Pageable pageable, String searchText){
+    public Page<Offer> getAllOffersByTitle(Pageable pageable, String searchText) {
         Page<Offer> offerPage = new PageImpl<Offer>(new LinkedList<Offer>());
         searchText = "%" + searchText + "%";
         offerPage = offerRepository.searchByTitle(pageable, searchText);
@@ -56,5 +56,15 @@ public class OffersService {
     public void deleteOffer(Long id) {
 
         offerRepository.deleteById(id);
+    }
+
+    public Page<Offer> getAllExceptUserOnes(Pageable pageable, User user) {
+        return offerRepository.findAllExceptUserOnes(pageable,user);
+    }
+
+    public Page<Offer> getAllExceptUserOnesByTitle(Pageable pageable, User user, String searchText) {
+        return offerRepository.searchAllExceptUserOnesByTitle(pageable, user,"%" + searchText + "%");
+
+
     }
 }
