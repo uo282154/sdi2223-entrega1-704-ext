@@ -1,5 +1,8 @@
 package com.uniovi.sdi.sdi2223entrega171;
 
+import com.uniovi.sdi.sdi2223entrega171.handlers.LoginFailureHandler;
+import com.uniovi.sdi.sdi2223entrega171.handlers.LoginSuccessHandler;
+import com.uniovi.sdi.sdi2223entrega171.handlers.LogoutHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,11 +13,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private LogoutHandler logoutHandler;
+    @Autowired
+    private LoginFailureHandler loginFailureHandler;
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -34,12 +48,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .defaultSuccessUrl("/home")
+                    .loginPage("/login")
+                    .permitAll()
+                    .successHandler(loginSuccessHandler)
+                    .failureHandler(loginFailureHandler)
                 .and()
                 .logout()
-                .permitAll();
+                    .permitAll()
+                    .logoutSuccessHandler(logoutHandler);
     }
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
