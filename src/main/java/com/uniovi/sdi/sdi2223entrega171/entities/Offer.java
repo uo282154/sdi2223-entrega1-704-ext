@@ -34,12 +34,13 @@ public class Offer {
         //this.createAt = LocalDate.now(); (en el controller¿?)
     }
 
-    public Offer(String title, String description, double price) {
+    public Offer(String title, String description, double price, User user) {
         this.title = title;
         this.description = description;
         this.price = price;
         //this.status = "ACTIVE";         //En el controller?¿
         this.createAt = LocalDate.now();
+        this.creator = user;    //PARA PRUEBAS!!
     }
 
     public Long getId() {
