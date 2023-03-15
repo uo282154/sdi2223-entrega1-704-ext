@@ -34,12 +34,12 @@ public class OffersService {
         offerRepository.save(offer);
     }
 
-//    public Page<Offer> getMyOffersByTitle(Pageable pageable, String searchText){
-//        Page<Offer> offerPage = new PageImpl<Offer>(new LinkedList<Offer>());
-//        searchText = "%" + searchText + "%";
-//        offerPage = offerRepository.searchByTitle(pageable, searchText);
-//        return offerPage;
-//    }
+    public Page<Offer> getAllOffersByTitle(Pageable pageable, String searchText){
+        Page<Offer> offerPage = new PageImpl<Offer>(new LinkedList<Offer>());
+        searchText = "%" + searchText + "%";
+        offerPage = offerRepository.searchByTitle(pageable, searchText);
+        return offerPage;
+    }
 
     public Page<Offer> getMyOffers(Pageable pageable, User user) {
         return offerRepository.findMyOffers(pageable, user);

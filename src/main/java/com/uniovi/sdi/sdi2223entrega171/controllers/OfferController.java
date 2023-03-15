@@ -83,7 +83,7 @@ public class OfferController {
 
         offersService.addOffer(offer);
         model.addAttribute("user", userDetailsService.getActiveUser());
-        return "redirect:/offer/list";
+        return "redirect:/offer/my";
     }
 
     /**
@@ -112,7 +112,33 @@ public class OfferController {
 
 
         offersService.deleteOffer(id);
-        return "redirect:/offer/list";
+        return "redirect:/offer/my";
+    }
+
+    /**
+     * Devuelve una lista con todas las ofertas
+     * @param model
+     * @param pageable
+     * @param principal
+     * @param searchText
+     * @return
+     */
+    @RequestMapping("offer/listAll")
+    public String getListAll(Model model, Pageable pageable, Principal principal,
+                          @RequestParam(value ="", required = false) String searchText){
+        Page<Offer> offerPage = new PageImpl<Offer>(new LinkedList<Offer>());
+
+        if (searchText != null && !searchText.isEmpty()){
+            offerPage = offersService.getAllOffersByTitle(pageable, searchText);
+        }
+        else{
+            offerPage = offersService.getAllOffers(pageable);
+        }
+        model.addAttribute("offersList", offerPage.getContent());
+        model.addAttribute("page", offerPage);
+
+        model.addAttribute("user", userDetailsService.getActiveUser());
+        return "offer/list";
     }
 
 
