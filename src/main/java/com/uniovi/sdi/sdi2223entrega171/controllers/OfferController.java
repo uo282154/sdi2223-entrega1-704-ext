@@ -102,8 +102,11 @@ public class OfferController {
      */
     @RequestMapping(value = "/offer/add", method = RequestMethod.GET)
     public String add(Model model) {
-        model.addAttribute("offer", new Offer());
+        Offer o=new Offer();
+        o.setCreator( userDetailsService.getActiveUser());
+        model.addAttribute("offer", o);
         model.addAttribute("user", userDetailsService.getActiveUser());
+
         return "offer/add";
     }
 
