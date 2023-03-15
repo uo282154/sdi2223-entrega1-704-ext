@@ -25,7 +25,7 @@
                 </a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link" href="/user/list">
+                <a class="nav-link" id="listarUsers" href="/user/list">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
                     <span th:text="#{nav.users}"></span>
                 </a>
