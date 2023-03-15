@@ -25,13 +25,8 @@ import java.util.List;
 @Controller
 public class OfferController {
 
-
-
-
     @Autowired
     private OffersService offersService;
-
-
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
@@ -49,21 +44,15 @@ public class OfferController {
      * @return
      */
     @RequestMapping("offer/my")
-    public String getList(Model model, Pageable pageable, Principal principal,
-                          @RequestParam(value ="", required = false) String searchText){
+    public String getList(Model model, Pageable pageable, Principal principal){
         Page<Offer> offerPage = new PageImpl<Offer>(new LinkedList<Offer>());
 
-        if (searchText != null && !searchText.isEmpty()){
-            offerPage = offersService.getMyOffersByTitle(pageable, searchText, userDetailsService.getActiveUser());
-        }
-        else{
-            offerPage = offersService.getMyOffers(pageable, userDetailsService.getActiveUser());
-        }
-        model.addAttribute("offersList", offerPage.getContent());
+        offerPage = offersService.getMyOffers(pageable, userDetailsService.getActiveUser());
+        model.addAttribute("myOffersList", offerPage.getContent());
         model.addAttribute("page", offerPage);
 
         model.addAttribute("user", userDetailsService.getActiveUser());
-        return "offer/list";
+        return "offer/my";
     }
 
     /**
@@ -138,7 +127,7 @@ public class OfferController {
         model.addAttribute("page", offerPage);
 
         model.addAttribute("user", userDetailsService.getActiveUser());
-        return "offer/list";
+        return "offer/listAll";
     }
 
 
