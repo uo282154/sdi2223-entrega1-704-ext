@@ -138,7 +138,7 @@ public class OfferController {
         model.addAttribute("page", offerPage);
 
         model.addAttribute("user", userDetailsService.getActiveUser());
-        return "offer/list";
+        return "offer/listAll";
     }
 
 
