@@ -5,18 +5,17 @@
 <!-- Barra de Navegación superior -->
 <nav th:replace="fragments/nav"/>
 <div class="container">
-    <h2>Usuarios</h2>
-    <p>Los usuarios que actualmente figuran en el sistema son los
-        siguientes:</p>
+    <h2><span th:text="#{user.list.users}"></span></h2>
+    <p><span th:text="#{user.list.presentusers}"></span></p>
     <div class="table-responsive">
         <form class="form-horizontal" method="post" action="/user/delete">
             <table class="table table-hover" id="tableUsers">
                 <thead>
                 <tr>
-                    <th scope="col">Email</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellidos</th>
-                    <th scope="col"><button type="submit" class="btn btn-primary">Eliminar</button></th>
+                    <th scope="col"><span th:text="#{user.list.mail}"></span></th>
+                    <th scope="col"><span th:text="#{user.list.name}"></span></th>
+                    <th scope="col"><span th:text="#{user.list.surname}"></span></th>
+                    <th scope="col"><button type="submit" class="btn btn-primary"><span th:text="#{user.list.delete}"></span></button></th>
                 </tr>
                 </thead>
                 <tbody>

@@ -48,28 +48,20 @@ public class OfferController {
      * @param searchText
      * @return
      */
-    @RequestMapping("offer/list")
+    @RequestMapping("offer/my")
     public String getList(Model model, Pageable pageable, Principal principal,
                           @RequestParam(value ="", required = false) String searchText){
         Page<Offer> offerPage = new PageImpl<Offer>(new LinkedList<Offer>());
 
         if (searchText != null && !searchText.isEmpty()){
-            offerPage = offersService.getAllOffersByTitle(pageable, searchText);
+            offerPage = offersService.getMyOffersByTitle(pageable, searchText, userDetailsService.getActiveUser());
         }
         else{
-            offerPage = offersService.getAllOffers(pageable);
+            offerPage = offersService.getMyOffers(pageable, userDetailsService.getActiveUser());
         }
         model.addAttribute("offersList", offerPage.getContent());
         model.addAttribute("page", offerPage);
 
-        //UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl();
-        //User activeUser = userDetailsService.getActiveUser(model);
-
-        //List<Offer> offerListSelled = offersService.getSoldOffers(activeUser);
-        //model.addAttribute("offersSelled", offerListSelled);
-
-        //List<Offer> offersMyList = offersService.getMyOffers(activeUser);
-        //model.addAttribute("myOffers", offersMyList);
         model.addAttribute("user", userDetailsService.getActiveUser());
         return "offer/list";
     }
