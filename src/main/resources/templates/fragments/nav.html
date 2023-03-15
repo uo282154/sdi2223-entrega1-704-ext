@@ -31,9 +31,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/offer/list">
+                <a class="nav-link" href="/offer/listAll">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    <span th:text="#{nav.offers}"></span>
+                    <span th:text="#{nav.allOffers}"></span>
                 </a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
@@ -41,6 +41,17 @@
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
                     Chats
                 </a>
+            </li>
+
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="offerDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" th:text="#{nav.myoffers}"> Mis ofertas
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a sec:authorize="isAuthenticated()" class="dropdown-item" href="/offer/my" th:text="#{nav.seemyoffers}">Ver mis ofertas</a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/offer/add" th:text="#{nav.addoffer}">Añadir oferta</a>
+                </div>
+
             </li>
         </ul>
         <ul class="navbar-nav justify-content-end">
