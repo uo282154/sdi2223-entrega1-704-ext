@@ -12,8 +12,6 @@ import org.springframework.validation.Validator;
 
 @Component
 public class OfferAddFormValidator implements Validator {
-    @Autowired
-    private OffersService offersService;
     @Override
     public boolean supports(Class<?> aClass) {
         return Offer.class.equals(aClass);
@@ -23,9 +21,12 @@ public class OfferAddFormValidator implements Validator {
         Offer offer = (Offer) target;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "Error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "Error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "Error.empty");
 
-        if (offersService.getOfferByTitle(offer.getTitle()) != null) {
-            errors.rejectValue("title", "Error.offer.add.titleExists");}
+        if (offer.getTitle().length()<5 || offer.getTitle().length()>20) {
+            errors.rejectValue("title", "Error.offer.add.title.length");}
+        if (offer.getDescription().length()<10 || offer.getDescription().length()>100) {
+            errors.rejectValue("description", "Error.offer.add.description.length");}
         if (offer.getPrice()<0) {
             errors.rejectValue("price", "Error.offer.add.negativePrice");}
 

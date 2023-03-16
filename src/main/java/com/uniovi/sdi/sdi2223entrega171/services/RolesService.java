@@ -9,7 +9,7 @@ public class RolesService {
         return roles;
     }
 
-    String[] offerStatus = {"ACTIVE", "FINISH"};
+    String[] offerStatus = {"ACTIVE", "SOLD"};
 
     public String[] getOfferStatus() {return offerStatus;}
 }

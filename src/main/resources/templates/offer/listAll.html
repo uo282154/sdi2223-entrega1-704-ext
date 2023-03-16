@@ -23,8 +23,7 @@
         <th scope="col"><span th:text="#{offer.title}"></span></th>
         <th scope="col"><span th:text="#{offer.description}"></span></th>
         <th scope="col"><span th:text="#{offer.price}"></span></th>
-        <th scope="col"><span th:text="#{offer.state}"></span></th>
-        <th scope="col"><span th:text="#{offer.createat}"></span></th>
+        <th scope="col"></th>
         <th scope="col"></th>
 
       </tr>
@@ -34,8 +33,12 @@
         <td scope="row" th:text="${offer.title}">Oferta 1</td>
         <td scope="row" th:text="${offer.description}">Oferta 2</td>
         <td scope="row" th:text="${offer.price}">2€</td>
-        <td scope="row" th:text="${offer.status}">ACTIVE</td>
-        <td scope="row" th:text="${offer.createAt}">01/01/2023</td>
+
+        <td th:if="${offer.status=='ACTIVE'}" ><a  th:href="${'/offer/buy/' + offer.id} ">Comprar</a>
+        </td>
+        <td th:if="${offer.status=='SOLD'}" >Vendido
+        </td>
+
         <td>
           <button type="button" th:id="${'conversation' + offer.id}" class="btn btn-info">
             Iniciar Conversación

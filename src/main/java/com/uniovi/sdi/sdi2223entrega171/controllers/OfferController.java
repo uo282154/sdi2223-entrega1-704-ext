@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -70,6 +72,7 @@ public class OfferController {
             return "offer/add";
         }
         offer.setCreator( userDetailsService.getActiveUser());
+        offer.setCreateAt(LocalDate.now());
         offersService.addOffer(offer);
         //model.addAttribute("user", userDetailsService.getActiveUser());
         return "redirect:/offer/my";
@@ -131,6 +134,9 @@ public class OfferController {
         model.addAttribute("user", userDetailsService.getActiveUser());
         return "offer/listAll";
     }
+
+
+
 
 
 }
