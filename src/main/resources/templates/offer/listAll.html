@@ -6,49 +6,46 @@
 <nav th:replace="fragments/nav"/>
 
 <div class="container">
-
-    <h2>Ofertas</h2>
-    <form class="form-inline mt-2 mb-2" action="/offer/listAll">
-        <div class="form-group">
-            <input name="searchText" type="text" class="form-control" size="50"
-                   placeholder="Titulo de la oferta">
-        </div>
-        <button type="submit" class="btn btn-default border border-primary"
-                th:text="Buscar"></button>
-    </form>
-    <p>Las ofertas que hay actualmente en el sistema son:</p>
-    <div class="table-responsive">
-        <table class="table table-hover" id="tableUsers">
-            <thead>
-            <tr>
-                <th scope="col"><span th:text="#{offer.title}"></span></th>
-                <th scope="col"><span th:text="#{offer.description}"></span></th>
-                <th scope="col"><span th:text="#{offer.price}"></span></th>
-                <th scope="col"><span th:text="#{offer.state}"></span></th>
-                <th scope="col"><span th:text="#{offer.createat}"></span></th>
-                <th scope="col"></th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="offer : ${offersList}">
-                <td scope="row" th:text="${offer.title}">Oferta 1</td>
-                <td scope="row" th:text="${offer.description}">Oferta 2</td>
-                <td scope="row" th:text="${offer.price}">2€</td>
-                <td scope="row" th:text="${offer.status}">ACTIVE</td>
-                <td scope="row" th:text="${offer.createAt}">01/01/2023</td>
-                <td>
-                    <button type="button" th:id="${'conversation' + offer.id}" class="btn btn-info">
-                        Iniciar Conversación
-                    </button>
-                </td>
-                <td><a th:href="${'/offer/delete/' + offer.id} "th:text=" #{offer.delete}">eliminar</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+  <h2>Todas las ofertas</h2>
+  <form class="form-inline mt-2 mb-2" action="/offer/listAll">
+    <div class="form-group">
+      <input name="searchText" type="text" class="form-control" size="50"
+             placeholder="Titulo de la oferta">
     </div>
-    <footer th:replace="fragments/pagination"/>
+    <button type="submit" class="btn btn-default border border-primary"
+            th:text="#{offer.search}"></button>
+  </form>
+  <p>Las ofertas que hay actualmente en el sistema son:</p>
+  <div class="table-responsive">
+    <table class="table table-hover" id="tableUsers">
+      <thead>
+      <tr>
+        <th scope="col"><span th:text="#{offer.title}"></span></th>
+        <th scope="col"><span th:text="#{offer.description}"></span></th>
+        <th scope="col"><span th:text="#{offer.price}"></span></th>
+        <th scope="col"><span th:text="#{offer.state}"></span></th>
+        <th scope="col"><span th:text="#{offer.createat}"></span></th>
+        <th scope="col"></th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="offer : ${offersList}">
+        <td scope="row" th:text="${offer.title}">Oferta 1</td>
+        <td scope="row" th:text="${offer.description}">Oferta 2</td>
+        <td scope="row" th:text="${offer.price}">2€</td>
+        <td scope="row" th:text="${offer.status}">ACTIVE</td>
+        <td scope="row" th:text="${offer.createAt}">01/01/2023</td>
+        <td>
+          <button type="button" th:id="${'conversation' + offer.id}" class="btn btn-info">
+            Iniciar Conversación
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <footer th:replace="fragments/pagination"/>
 </div>
 <footer th:replace="fragments/footer"/>
 </body>
