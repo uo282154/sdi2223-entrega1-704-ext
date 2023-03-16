@@ -21,12 +21,6 @@
                     <span th:text="#{nav.credit}"> </span><b th:text="${user.money}"></b>
                 </a>
             </li>
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" href="/signup">
-                    <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    <span th:text="#{nav.myoffers}"></span>
-                </a>
-            </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" href="/user/list">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
@@ -48,7 +42,7 @@
 
             <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link dropdown-toggle" href="#" id="offerDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false" th:text="#{nav.myoffers}"> Mis ofertas
+                   aria-haspopup="true" aria-expanded="false" th:text="#{nav.myoffers}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" href="/offer/my"
