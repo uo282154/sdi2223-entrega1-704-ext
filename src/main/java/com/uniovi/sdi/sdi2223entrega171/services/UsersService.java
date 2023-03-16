@@ -33,7 +33,6 @@ public class UsersService {
         return users;
     }
 
-
     public User getUser(Long id) {
 
         return usersRepository.findById(id).get();

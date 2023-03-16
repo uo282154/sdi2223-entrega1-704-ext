@@ -15,15 +15,21 @@
                     <th scope="col"><span th:text="#{user.list.mail}"></span></th>
                     <th scope="col"><span th:text="#{user.list.name}"></span></th>
                     <th scope="col"><span th:text="#{user.list.surname}"></span></th>
-                    <th scope="col"><button type="submit" class="btn btn-primary"><span th:text="#{user.list.delete}"></span></button></th>
+                    <th scope="col"><button type="submit" class="btn btn-primary" id="delete"><span th:text="#{user.list.delete}"></span></button></th>
                 </tr>
                 </thead>
                 <tbody>
+                <tr th:each="admin : ${adminsList}" class="user">
+                    <td scope="row" th:text="${admin.email}">71888888X</td>
+                    <td scope="row" th:text="${admin.name}">Nombre del alumno</td>
+                    <td scope="row" th:text="${admin.surname}">Apellidos del alumno</td>
+                    <td scope="row" ><i class="fas fa-user"></i></td>
+                </tr>
                 <tr th:each="user : ${usersList}" class="user">
                     <td scope="row" th:text="${user.email}">71888888X</td>
                     <td scope="row" th:text="${user.name}">Nombre del alumno</td>
                     <td scope="row" th:text="${user.surname}">Apellidos del alumno</td>
-                    <td scope="row" ><input type="checkbox" th:name="${user.id}"></td>
+                    <td scope="row" ><input class="cb-user" type="checkbox" th:name="${user.id}" th:id="${user.name}"></td>
                 </tr>
                 </tbody>
             </table>

@@ -13,7 +13,7 @@ import java.util.List;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class Sdi2223702SpringApplicationTests {
+class Sdi2223Entrega171ApplicationTests {
 
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Path\\geckodriver-v0.30.0-win64.exe";
@@ -171,9 +171,7 @@ class Sdi2223702SpringApplicationTests {
     @Order(10)
     public void PR10() {
         //Vamos al formulario de logueo.
-        //String checkText = "Desconectar";
-        //List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-        //Assertions.assertEquals(0, result.size());
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "Desconectar",PO_View.getTimeout());
     }
 
     @Test
@@ -190,5 +188,49 @@ class Sdi2223702SpringApplicationTests {
         PO_NavView.clickOption(driver,"/user/list","text","Usuarios");
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",PO_View.getTimeout());
         Assertions.assertEquals(6, userList.size());
+    }
+
+    @Test
+    @Order(12)
+    public void PR12() {
+        //Vamos al formulario de logueo.
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
+        //Comprobamos que entramos en la pagina privada de Alumno
+        String checkText = "Listar usuarios";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+        PO_NavView.clickOption(driver,"/user/list","text","Usuarios");
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",PO_View.getTimeout());
+        Assertions.assertEquals(6, userList.size());
+
+        PO_PrivateView.clickOption(driver,"1");
+        PO_PrivateView.clickOption(driver,"delete");
+        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",PO_View.getTimeout());
+        Assertions.assertEquals(5, userList2.size());
+    }
+
+    @Test
+    @Order(13)
+    public void PR13() {
+        //Vamos al formulario de logueo.
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
+        //Comprobamos que entramos en la pagina privada de Alumno
+        String checkText = "Listar usuarios";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+        PO_NavView.clickOption(driver,"/user/list","text","Usuarios");
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",PO_View.getTimeout());
+        Assertions.assertEquals(5, userList.size());
+
+        List<WebElement> result2 = PO_View.checkElementBy(driver, "class", "cb-user");
+        String id = result2.get(result2.size() - 1).getAttribute("id");
+        PO_PrivateView.clickOption(driver,id);
+        PO_PrivateView.clickOption(driver,"delete");
+        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",PO_View.getTimeout());
+        Assertions.assertEquals(4, userList2.size());
     }
 }
