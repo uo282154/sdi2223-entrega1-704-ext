@@ -67,11 +67,12 @@ public class OfferController {
 
         offerAddFormValidator.validate(offer,result);
         if(result.hasErrors()) {
+            model.addAttribute("user", userDetailsService.getActiveUser());
             return "offer/add";
         }
         offer.setCreator( userDetailsService.getActiveUser());
         offersService.addOffer(offer);
-        model.addAttribute("user", userDetailsService.getActiveUser());
+        //model.addAttribute("user", userDetailsService.getActiveUser());
         return "redirect:/offer/my";
     }
 
