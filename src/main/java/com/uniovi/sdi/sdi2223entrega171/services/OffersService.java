@@ -67,4 +67,9 @@ public class OffersService {
 
 
     }
+
+    public boolean ableToDelete(Long id, User activeUser) {
+        Offer o= offerRepository.findById(id).get();
+        return o.getCreator().getId()==activeUser.getId();
+    }
 }
