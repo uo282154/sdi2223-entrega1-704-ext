@@ -1,5 +1,5 @@
 <!-- nav.html -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary"
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
     <a class="navbar-brand" href="#"></a>
     <!-- <img src="/images/logo-wallapop.png" alt="logo"/> -->
@@ -41,7 +41,7 @@
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link" href="/chat/list">
-                    <i class='fas fa-money-bill' style='font-size:16px'></i>
+                    <i class='fas fa-comment' style='font-size:16px'></i>
                     <span th:text="Chats"></span>
                 </a>
             </li>
