@@ -40,7 +40,6 @@ public class OfferController {
      * @param model
      * @param pageable
      * @param principal
-     * @param searchText
      * @return
      */
     @RequestMapping("offer/my")
@@ -98,8 +97,10 @@ public class OfferController {
     @RequestMapping("/offer/delete/{id}")
     public String deleteOffer(@PathVariable Long id){
 
+        if(offersService.ableToDelete(id, userDetailsService.getActiveUser())){
+            offersService.deleteOffer(id);
+        }
 
-        offersService.deleteOffer(id);
         return "redirect:/offer/my";
     }
 
