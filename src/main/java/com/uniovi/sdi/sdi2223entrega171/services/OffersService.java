@@ -17,6 +17,8 @@ public class OffersService {
 
     @Autowired
     private OfferRepository offerRepository;
+    @Autowired
+    private UsersService usersService;
 
     public Page<Offer> getAllOffers(Pageable pageable) {
         return offerRepository.findAll(pageable);
@@ -73,5 +75,49 @@ public class OffersService {
 
     public Offer getOffer(Long id){
         return offerRepository.findById(id).get();
+    }
+    
+    public void buyOffer(Long id, User activeUser) {
+        Offer o=offerRepository.findById(id).get();
+        if(o!=null) {
+            o.setBuyer(activeUser);
+            o.setStatus(Offer.STATUS_SOLD);
+            offerRepository.save(o);
+            activeUser.setMoney(activeUser.getMoney()-o.getPrice());
+            usersService.updateMoney(activeUser);
+        }
+    }
+
+    public Boolean notEnoughMoney(User activeUser, Long id) {
+        Offer o=offerRepository.findById(id).get();
+        if(o!=null) {
+            return activeUser.getMoney()<o.getPrice();
+        }
+        return true;
+    }
+
+    public Boolean isBuyed(Long id) {
+        Offer o=offerRepository.findById(id).get();
+        if(o!=null) {
+            return o.getStatus().equals(Offer.STATUS_SOLD);
+        }
+        return true;
+    }
+
+    public Boolean isMine(Long id, User activeUser) {
+        Offer o=offerRepository.findById(id).get();
+        if(o!=null && o.getCreator().getId()!=activeUser.getId()) {
+            return false;
+
+        }
+
+
+        return true;
+    }
+
+    public Offer getOfferById(Long id) {
+        Offer o=offerRepository.findById(id).get();
+        if(o==null) throw new RuntimeException("The offer does not exist");
+        return o;
     }
 }

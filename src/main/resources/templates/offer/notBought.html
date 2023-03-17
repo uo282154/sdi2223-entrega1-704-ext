@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<!-- Barra de Navegación superior -->
+<nav th:replace="fragments/nav"/>
+
+<div class="container" style="text-align: center">
+  <h2 th:text="#{offer.notbought}"></h2>
+
+  <p th:if="${errors[0]}"><span th:text="#{offer.buy.error1}"+></span></p>
+  <p th:if="${errors[1]}"><span th:text="#{offer.buy.error2}"+></span></p>
+  <p th:if="${errors[2]}"><span th:text="#{offer.buy.error3}"+></span></p>
+
+
+
+  <a href="/offer/listAll"> Volver </a>
+</div>
+
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

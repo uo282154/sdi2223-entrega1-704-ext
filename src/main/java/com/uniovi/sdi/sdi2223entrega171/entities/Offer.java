@@ -9,6 +9,10 @@ import java.util.List;
 @Table(name="offer")
 public class Offer {
 
+
+    public static String STATUS_ACTIVE="ACTIVE";
+    public static String STATUS_SOLD="SOLD";
+
     @Id
     @GeneratedValue
     private Long id;
@@ -36,14 +40,14 @@ public class Offer {
     public Offer() {
         //La oferta tiene que tener estado created (en el offerController al crearla)
         //this.createAt = LocalDate.now(); (en el controller¿?)
-        this.status="ACTIVE";
+        this.status=STATUS_ACTIVE;
     }
 
     public Offer(String title, String description, double price, User user) {
         this.title = title;
         this.description = description;
         this.price = price;
-        this.status = "ACTIVE";         //En el controller?¿
+        this.status = STATUS_ACTIVE;         //En el controller?¿
         this.createAt = LocalDate.now();
         this.creator = user;
     }
@@ -91,13 +95,14 @@ public class Offer {
     public LocalDate getCreateAt() {
         return createAt;
     }
+    /*
     public void setCreateAt(String createAt) {
         this.createAt = LocalDate.parse(createAt);
-    }
+    }*/
 
-    //public void setCreateAt(LocalDate createAt) {
-     //   this.createAt = createAt;
-    //}
+    public void setCreateAt(LocalDate createAt) {
+        this.createAt = createAt;
+    }
 
     public User getCreator() {
         return creator;

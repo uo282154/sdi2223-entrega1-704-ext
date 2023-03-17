@@ -33,7 +33,6 @@ public class UsersService {
         return users;
     }
 
-
     public User getUser(Long id) {
 
         return usersRepository.findById(id).get();
@@ -42,6 +41,12 @@ public class UsersService {
     public void addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
+    }
+
+    public void updateMoney(User user){
+        User user2 = getUser(user.getId());
+        user2.setMoney(user.getMoney());
+        usersRepository.save(user2);
     }
 
     public void updateUser(User user) {
