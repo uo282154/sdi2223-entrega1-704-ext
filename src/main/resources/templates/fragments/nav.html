@@ -21,12 +21,6 @@
                     <span th:text="#{nav.credit}"> </span><b th:text="${user.money}"></b>
                 </a>
             </li>
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" href="/signup">
-                    <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    <span th:text="#{nav.myoffers}"></span>
-                </a>
-            </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" href="/user/list">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>

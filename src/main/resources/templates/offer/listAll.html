@@ -26,7 +26,6 @@
         <th scope="col"><span th:text="#{offer.state}"></span></th>
         <th scope="col"><span th:text="#{offer.createat}"></span></th>
         <th scope="col"></th>
-
       </tr>
       </thead>
       <tbody>
@@ -36,10 +35,8 @@
         <td scope="row" th:text="${offer.price}">2€</td>
         <td scope="row" th:text="${offer.status}">ACTIVE</td>
         <td scope="row" th:text="${offer.createAt}">01/01/2023</td>
-        <td>
-          <button type="button" th:id="${'conversation' + offer.id}" class="btn btn-info">
-            Iniciar Conversación
-          </button>
+        <td scope="row">
+          <a th:href="@{'/chat/' + ${offer.id} + '/' + ${#authentication.principal.username}}" class="btn btn-primary">Chat with Seller</a>
         </td>
       </tr>
       </tbody>
