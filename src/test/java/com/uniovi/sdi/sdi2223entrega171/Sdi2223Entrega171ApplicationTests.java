@@ -233,4 +233,29 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",PO_View.getTimeout());
         Assertions.assertEquals(4, userList2.size());
     }
+
+    @Test
+    @Order(14)
+    public void PR14() {
+        //Vamos al formulario de logueo.
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
+        //Comprobamos que entramos en la pagina privada de Alumno
+        String checkText = "Listar usuarios";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+        PO_NavView.clickOption(driver,"/user/list","text","Usuarios");
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",PO_View.getTimeout());
+        Assertions.assertEquals(4, userList.size());
+
+        List<WebElement> result2 = PO_View.checkElementBy(driver, "class", "cb-user");
+        for(int i = 0; i < result2.size(); i++) {
+            String id = result2.get(i).getAttribute("id");
+            PO_PrivateView.clickOption(driver, id);
+        }
+        PO_PrivateView.clickOption(driver,"delete");
+        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",PO_View.getTimeout());
+        Assertions.assertEquals(1, userList2.size());
+    }
 }
