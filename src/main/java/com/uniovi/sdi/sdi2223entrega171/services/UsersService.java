@@ -44,6 +44,12 @@ public class UsersService {
         usersRepository.save(user);
     }
 
+    public void updateMoney(User user){
+        User user2 = getUser(user.getId());
+        user2.setMoney(user.getMoney());
+        usersRepository.save(user2);
+    }
+
     public void updateUser(User user) {
         User user2 = getUser(user.getId());
         user2.setName(user.getName());

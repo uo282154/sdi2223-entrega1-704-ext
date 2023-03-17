@@ -33,4 +33,7 @@ public interface OfferRepository extends CrudRepository<Offer, Long> {
 
     @Query("SELECT o FROM Offer o WHERE (LOWER(o.title) LIKE LOWER(?2)) and o.creator!=?1")
     Page<Offer> searchAllExceptUserOnesByTitle(Pageable pageable, User user,String searchText);
+
+    @Query("UPDATE Offer set buyer=?2, status='SOLD' WHERE id=?1")
+    void setOfferBuyed(Long id, User activeUser);
 }
