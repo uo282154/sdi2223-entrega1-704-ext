@@ -1,5 +1,7 @@
 package com.uniovi.sdi.sdi2223entrega171;
 
+import com.uniovi.sdi.sdi2223entrega171.interceptors.LogInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,9 +48,12 @@ public class CustomConfiguration implements WebMvcConfigurer {
         localeChangeInterceptor.setParamName("lang");
         return localeChangeInterceptor;
     }
+    @Autowired
+    private LogInterceptor logInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+        registry.addInterceptor(logInterceptor);
     }
 }

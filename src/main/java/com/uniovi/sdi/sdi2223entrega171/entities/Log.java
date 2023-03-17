@@ -21,18 +21,16 @@ public class Log {
 
     private LogItemType type;
     private Timestamp timestamp; //new Timestamp(System.currentTimeMillis())
-    private String user;
     private String action;
     private String description;
 
     public Log() {
     }
 
-    public Log(long id, LogItemType type, Timestamp timestamp, String user, String action, String description) {
+    public Log(long id, LogItemType type, Timestamp timestamp, String action, String description) {
         this.id = id;
         this.type = type;
         this.timestamp = timestamp;
-        this.user = user;
         this.action = action;
         this.description = description;
     }
@@ -48,14 +46,6 @@ public class Log {
     }
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
     }
 
     public String getAction() {
