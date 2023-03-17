@@ -8,7 +8,7 @@
 <div class="container">
 
     <h2>Ofertas</h2>
-    <form class="form-inline mt-2 mb-2" action="/offer/list">
+    <form class="form-inline mt-2 mb-2" action="/offer/my">
         <div class="form-group">
             <input name="searchText" type="text" class="form-control" size="50"
                    placeholder="Titulo de la oferta">
@@ -18,7 +18,7 @@
     </form>
     <p>Las ofertas que hay actualmente en el sistema son:</p>
     <div class="table-responsive">
-        <table class="table table-hover" id="tableUsers">
+        <table class="table table-hover" id="tableOffers">
             <thead>
             <tr>
                 <th scope="col"><span th:text="#{offer.title}"></span></th>
@@ -31,7 +31,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="offer : ${offersList}">
+            <tr th:each="offer : ${myOffersList}">
                 <td scope="row" th:text="${offer.title}">Oferta 1</td>
                 <td scope="row" th:text="${offer.description}">Oferta 2</td>
                 <td scope="row" th:text="${offer.price}">2€</td>
@@ -41,6 +41,8 @@
                     <button type="button" th:id="${'conversation' + offer.id}" class="btn btn-info">
                         Iniciar Conversación
                     </button>
+                </td>
+                <td><a th:href="${'/offer/delete/' + offer.id} "th:text=" #{offer.delete}">eliminar</a>
                 </td>
             </tr>
             </tbody>

@@ -8,6 +8,10 @@ import java.util.Date;
 @Table(name="offer")
 public class Offer {
 
+
+    public static String STATUS_ACTIVE="ACTIVE";
+    public static String STATUS_SOLD="SOLD";
+
     @Id
     @GeneratedValue
     private Long id;
@@ -32,14 +36,16 @@ public class Offer {
     public Offer() {
         //La oferta tiene que tener estado created (en el offerController al crearla)
         //this.createAt = LocalDate.now(); (en el controller¿?)
+        this.status=STATUS_ACTIVE;
     }
 
-    public Offer(String title, String description, double price) {
+    public Offer(String title, String description, double price, User user) {
         this.title = title;
         this.description = description;
         this.price = price;
-        //this.status = "ACTIVE";         //En el controller?¿
+        this.status = STATUS_ACTIVE;         //En el controller?¿
         this.createAt = LocalDate.now();
+        this.creator = user;    //PARA PRUEBAS!!
     }
 
     public Long getId() {
@@ -85,6 +91,10 @@ public class Offer {
     public LocalDate getCreateAt() {
         return createAt;
     }
+    /*
+    public void setCreateAt(String createAt) {
+        this.createAt = LocalDate.parse(createAt);
+    }*/
 
     public void setCreateAt(LocalDate createAt) {
         this.createAt = createAt;

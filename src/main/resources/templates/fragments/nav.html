@@ -1,5 +1,5 @@
 <!-- nav.html -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary"
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
     <a class="navbar-brand" href="#"></a>
     <!-- <img src="/images/logo-wallapop.png" alt="logo"/> -->
@@ -10,18 +10,15 @@
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
             <li class="nav-item ">
-                <a class="nav-link" href="/home"><span th:text="#{nav.home}"></span><span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/home">
+                    <i class='fas fa-home' style='font-size:16px'></i>
+                    <span th:text="#{nav.home}"></span><span class="sr-only">(current)</span>
+                </a>
             </li>
             <li class="nav-item " sec:authorize="isAuthenticated()">
                 <a class="nav-link">
                     <span th:text="#{nav.user}"> </span><b th:text="${user.email}"></b>
                     <span th:text="#{nav.credit}"> </span><b th:text="${user.money}"></b>
-                </a>
-            </li>
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" href="/signup">
-                    <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    <span th:text="#{nav.myoffers}"></span>
                 </a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
@@ -31,23 +28,37 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/offer/list">
-                    <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    <span th:text="#{nav.offers}"></span>
+                <a class="nav-link" href="/offer/listAll">
+                    <i class='fas fa-money-bill' style='font-size:16px'></i>
+                    <span th:text="#{nav.allOffers}"></span>
                 </a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link" href="/chat/list">
-                    <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    Chats
+                    <i class='fas fa-comment' style='font-size:16px'></i>
+                    <span th:text="Chats"></span>
                 </a>
+            </li>
+
+            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER')">
+                <a class="nav-link dropdown-toggle" href="#" id="offerDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" th:text="#{nav.myoffers}">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" href="/offer/my"
+                       th:text="#{nav.seemyoffers}">Ver mis ofertas</a>
+                    <a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" href="/offer/add"
+                       th:text="#{nav.addoffer}">Añadir oferta</a>
+                </div>
+
             </li>
         </ul>
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="btnLanguage" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
-                        th:text="#{language.change}"></span>
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class='fas fa-language' style='font-size:16px'></i>
+                    <span th:text="#{language.change}"></span>
                 </a>
                 <div id="languageDropdownMenuButton" class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a
