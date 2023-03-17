@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
-import java.util.List;
 
 @Controller
 public class OfferController {
@@ -136,7 +134,30 @@ public class OfferController {
     }
 
 
+    @RequestMapping("/offer/buy/{id}")
+    public String buyOffer(@PathVariable Long id,Model model){
+        model.addAttribute("user", userDetailsService.getActiveUser());
 
+
+        User activeUser=userDetailsService.getActiveUser();
+        //Boolean[] errors=new Boolean[3];
+        Boolean[] errors=new Boolean[] {false,false,false};
+        errors[0]=offersService.notEnoughMoney(activeUser,id);
+        errors[1]=offersService.isBuyed(id);
+        errors[2]=offersService.isMine(id,activeUser);
+        model.addAttribute("offer",offersService.getOfferById(id));
+
+        if(errors[0] || errors[1] || errors[2]){
+            model.addAttribute("errors",errors);
+            return "offer/notBought";
+        }
+
+        offersService.buyOffer(id,activeUser);
+
+
+
+        return "offer/bought";
+    }
 
 
 }
