@@ -66,8 +66,6 @@ public class OffersService {
 
     public Page<Offer> getAllExceptUserOnesByTitle(Pageable pageable, User user, String searchText) {
         return offerRepository.searchAllExceptUserOnesByTitle(pageable, user,"%" + searchText + "%");
-
-
     }
 
     public boolean ableToDelete(Long id, User activeUser) {
@@ -75,6 +73,10 @@ public class OffersService {
         return o.getCreator().getId()==activeUser.getId();
     }
 
+    public Offer getOffer(Long id){
+        return offerRepository.findById(id).get();
+    }
+    
     public void buyOffer(Long id, User activeUser) {
         Offer o=offerRepository.findById(id).get();
         if(o!=null) {
