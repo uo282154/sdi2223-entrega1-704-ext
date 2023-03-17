@@ -56,7 +56,7 @@ class Sdi2223Entrega171ApplicationTests {
         PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
         PO_SignUpView.fillForm(driver, "email@gmail.com", "Josefo", "Perez", "77777", "77777");
         String checkText = "Identificate";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "loginbtn");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
@@ -66,7 +66,7 @@ class Sdi2223Entrega171ApplicationTests {
         PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
         PO_SignUpView.fillForm(driver, "", "", "", "77777", "77777");
         String checkText = "Registrate";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "signupbtn");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
@@ -76,7 +76,7 @@ class Sdi2223Entrega171ApplicationTests {
         PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
         PO_SignUpView.fillForm(driver, "email@gmail.com", "Josefo", "Perez", "77877", "77777");
         String checkText = "Registrate";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "signupbtn");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
@@ -86,7 +86,7 @@ class Sdi2223Entrega171ApplicationTests {
         PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
         PO_SignUpView.fillForm(driver, "admin@gmail.com", "Josefo", "Perez", "77777", "77777");
         String checkText = "Registrate";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "signupbtn");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
@@ -96,7 +96,7 @@ class Sdi2223Entrega171ApplicationTests {
         PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
         PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
         String checkText = "Listar usuarios";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        List<WebElement> result = PO_View.checkElementBy(driver, "id","listarUsers");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
@@ -105,9 +105,8 @@ class Sdi2223Entrega171ApplicationTests {
     public void PR06() {
         PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
         PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
-        String checkText = "Mis ofertas";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertEquals(checkText, result.get(0).getText());
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "offerDropdown");
+        Assertions.assertEquals("offerDropdown", result.get(0).getAttribute("id"));
     }
 
     @Test
@@ -116,7 +115,7 @@ class Sdi2223Entrega171ApplicationTests {
         PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
         PO_LoginView.fillLoginForm(driver, "", "");
         String checkText = "Identificate";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "loginbtn");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 

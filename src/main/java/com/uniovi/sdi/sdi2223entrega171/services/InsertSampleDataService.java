@@ -46,18 +46,18 @@ public class InsertSampleDataService {
         usersService.addUser(user5);
 
 
-        //Offer offer1 = new Offer("Oferta 1", "Oferta para los más entusiastas", 40, user1);
-        //offer1.setStatus(Offer.STATUS_SOLD);
-        //Offer offer2 = new Offer("Oferta 2", "Oferta para los más locos", 50, user2);
-        //offer2.setStatus(rolesService.getOfferStatus()[0]);
-        //Offer offer3 = new Offer("Oferta 3", "Oferta tímida", 22, user3);
-        //offer3.setStatus(rolesService.getOfferStatus()[0]);
+        Offer offer1 = new Offer("Oferta 1", "Oferta para los más entusiastas", 40, user1);
+        offer1.setStatus(Offer.STATUS_SOLD);
+        Offer offer2 = new Offer("Oferta 2", "Oferta para los más locos", 50, user2);
+        offer2.setStatus(rolesService.getOfferStatus()[0]);
+        Offer offer3 = new Offer("Oferta 3", "Oferta tímida", 22, user3);
+        offer3.setStatus(rolesService.getOfferStatus()[0]);
         //Offer offer4 = new Offer("Oferta 4", "Ofertón, sin más", 10);
         //offer4.setStatus(rolesService.getOfferStatus()[0]);
 
-        //offersService.addOffer(offer1);
-        //offersService.addOffer(offer2);
-        //offersService.addOffer(offer3);
+        offersService.addOffer(offer1);
+        offersService.addOffer(offer2);
+        offersService.addOffer(offer3);
     }
 
 }
