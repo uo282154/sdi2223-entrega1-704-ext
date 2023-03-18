@@ -19,12 +19,26 @@
             </select>
 
             <button type="submit" class="btn btn-primary" th:text="#{log.filter.btn}">F</button>
+
+            <button type="button" id="showAllBtn" class="btn btn-primary" th:text="#{log.showAll.btn}">SA</button>
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                $( "#showAllBtn" ).click(function() {
+                    let numberPage = [[${param.page}]];
+                    let urlUpdate = '/log/list/update';
+                    if (numberPage != null ){
+                        urlUpdate += "?page=0";
+                    }
+                    $("#tableLogs").load(urlUpdate);
+                });
+                /*]]>*/
+            </script>
         </div>
     </form>
 
 
 <!--    ----------------------------------------------------------------->
-
+    <p>Actividades:</p>
     <button type="button" id="updateButton" class="btn btn-primary" th:text="#{log.table.update.btn}">Actualizar</button>
     <script th:inline="javascript">
         /*<![CDATA[*/

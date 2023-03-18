@@ -40,7 +40,7 @@ public class LogController {
     }
 
     @RequestMapping("/log/list/update")
-    public String updateList(Model model, Pageable pageable,Principal principal) {
+    public String updateList(Model model, Pageable pageable) {
 
         model.addAttribute("typesList", logService.getTypesLog());
         model.addAttribute("logsList", logService.getLogs(pageable).getContent());
