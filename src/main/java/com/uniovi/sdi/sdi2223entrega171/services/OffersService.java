@@ -47,6 +47,10 @@ public class OffersService {
         return offerRepository.findMyOffers(pageable, user);
     }
 
+    public Page<Offer> getBoughtsOfBuyer(Pageable pageable, User user) {
+        return offerRepository.searchByBuyer(pageable,Offer.STATUS_SOLD.toString() ,user);
+    }
+
     public List<Offer> getSoldOffers(User user) {
         return offerRepository.findSoldOffers(user);
     }

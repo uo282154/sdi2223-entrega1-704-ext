@@ -4,6 +4,7 @@ import com.uniovi.sdi.sdi2223entrega171.entities.Offer;
 import com.uniovi.sdi.sdi2223entrega171.entities.User;
 import com.uniovi.sdi.sdi2223entrega171.services.OffersService;
 import com.uniovi.sdi.sdi2223entrega171.services.UserDetailsServiceImpl;
+import com.uniovi.sdi.sdi2223entrega171.services.UsersService;
 import com.uniovi.sdi.sdi2223entrega171.validators.OfferAddFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +28,8 @@ public class OfferController {
 
     @Autowired
     private OffersService offersService;
-
+    @Autowired
+    private UsersService usersService;
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -154,10 +156,23 @@ public class OfferController {
 
         offersService.buyOffer(id,activeUser);
 
-
-
         return "offer/bought";
     }
 
+    @RequestMapping("/offer/myBoughts")
+    public String getListBoughts(Model model, Pageable pageable, Principal principal){
+        Page<Offer> offerPage = new PageImpl<Offer>(new LinkedList<Offer>());
+        offerPage = offersService.getBoughtsOfBuyer(pageable, userDetailsService.getActiveUser());
+
+
+        for(Offer o: offerPage)
+            o.setCreatorEmail(usersService.getUser(o.getBuyer().getId()).getEmail());
+
+
+        model.addAttribute("myBoughtsList", offerPage.getContent());
+        model.addAttribute("page", offerPage);
+        model.addAttribute("user", userDetailsService.getActiveUser());
+        return "offer/myBoughts";
+    }
 
 }
