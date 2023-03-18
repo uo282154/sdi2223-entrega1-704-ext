@@ -15,7 +15,7 @@
     <button type="submit" class="btn btn-default border border-primary"
             th:text="#{offer.search}"></button>
   </form>
-  <p>Las ofertas que hay actualmente en el sistema son:</p>
+  <p th:text="#{offer.actualoffers}"></p>
   <div class="table-responsive">
     <table class="table table-hover" id="tableUsers">
       <thead>
@@ -23,10 +23,8 @@
         <th scope="col"><span th:text="#{offer.title}"></span></th>
         <th scope="col"><span th:text="#{offer.description}"></span></th>
         <th scope="col"><span th:text="#{offer.price}"></span></th>
-        <th scope="col"><span th:text="#{offer.state}"></span></th>
-        <th scope="col"><span th:text="#{offer.createat}"></span></th>
         <th scope="col"></th>
-
+        <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
@@ -34,12 +32,13 @@
         <td scope="row" th:text="${offer.title}">Oferta 1</td>
         <td scope="row" th:text="${offer.description}">Oferta 2</td>
         <td scope="row" th:text="${offer.price}">2€</td>
-        <td scope="row" th:text="${offer.status}">ACTIVE</td>
-        <td scope="row" th:text="${offer.createAt}">01/01/2023</td>
-        <td>
-          <button type="button" th:id="${'conversation' + offer.id}" class="btn btn-info">
-            Iniciar Conversación
-          </button>
+        <td th:if="${offer.status=='ACTIVE'}" ><a  th:href="${'/offer/buy/' + offer.id} ">Comprar</a>
+        </td>
+        <td th:if="${offer.status=='SOLD'}" >Vendido
+        </td>
+        <td scope="row">
+          <a th:href="@{'/chat/' + ${offer.id} + '/' + ${#authentication.principal.username}}" class="btn btn-primary"
+            th:text="#{chat.create}"></a>
         </td>
       </tr>
       </tbody>

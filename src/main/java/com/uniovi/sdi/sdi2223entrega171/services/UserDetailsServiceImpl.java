@@ -1,6 +1,10 @@
 package com.uniovi.sdi.sdi2223entrega171.services;
 
+import com.uniovi.sdi.sdi2223entrega171.entities.Chat;
+import com.uniovi.sdi.sdi2223entrega171.entities.Offer;
 import com.uniovi.sdi.sdi2223entrega171.entities.User;
+import com.uniovi.sdi.sdi2223entrega171.repositories.ChatRepository;
+import com.uniovi.sdi.sdi2223entrega171.repositories.OfferRepository;
 import com.uniovi.sdi.sdi2223entrega171.repositories.UsersRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +24,13 @@ import java.util.*;
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private ChatRepository chatRepository;
+
+    @Autowired
+    private OfferRepository offerRepository;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = usersRepository.findByEmail(email);
@@ -39,4 +50,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = usersRepository.findByEmail(email);
         return user;
     }
+
+    public boolean isUserInChat(Long chatId, String username, Long offerId) {
+        Chat chat = chatRepository.findById(chatId).get();
+        Offer offer = offerRepository.findById(offerId).get();
+        return chat != null && (getActiveUser().getEmail().equals(username)
+            || offer.getCreator().getEmail().equals(getActiveUser().getEmail()) );
+    }
+
 }

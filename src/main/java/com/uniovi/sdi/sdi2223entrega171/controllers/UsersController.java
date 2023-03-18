@@ -74,7 +74,19 @@ public class UsersController {
 
     @RequestMapping("/user/list")
     public String getList(Model model) {
-        model.addAttribute("usersList", usersService.getUsers());
+        List<User> allUsers = usersService.getUsers();
+        List<User> users = new ArrayList<User>();
+        List<User> admins = new ArrayList<User>();
+        for(User u : allUsers) {
+            if(!u.getRole().equals("ROLE_ADMIN")) {
+                users.add(u);
+            }
+            else {
+                admins.add(u);
+            }
+        }
+        model.addAttribute("adminsList", admins);
+        model.addAttribute("usersList", users);
         model.addAttribute("user", userDetailsService.getActiveUser());
         return "user/list";
     }

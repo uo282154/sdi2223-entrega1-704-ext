@@ -18,6 +18,8 @@ public interface OfferRepository extends CrudRepository<Offer, Long> {
     Page<Offer> searchByTitleAndUser(Pageable pageable, String searchText, User user);
     Page<Offer> findAll(Pageable pageable);
 
+    @Query("SELECT o FROM Offer o WHERE ( LOWER(o.status) = LOWER(?1) AND o.buyer = ?2)")
+    Page<Offer> searchByBuyer(Pageable pageable, String status, User buyer);
 
     @Query("SELECT o FROM Offer o WHERE o.creator = ?1")
     Page<Offer> findMyOffers(Pageable pageable, User user);
@@ -33,4 +35,7 @@ public interface OfferRepository extends CrudRepository<Offer, Long> {
 
     @Query("SELECT o FROM Offer o WHERE (LOWER(o.title) LIKE LOWER(?2)) and o.creator!=?1")
     Page<Offer> searchAllExceptUserOnesByTitle(Pageable pageable, User user,String searchText);
+
+    @Query("UPDATE Offer set buyer=?2, status='SOLD' WHERE id=?1")
+    void setOfferBuyed(Long id, User activeUser);
 }
