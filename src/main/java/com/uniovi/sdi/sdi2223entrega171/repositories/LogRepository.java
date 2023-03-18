@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface LogRepository extends CrudRepository<Log, Long> {
     @Query("SELECT log FROM Log log  ORDER BY log.timestamp DESC")
     Page<Log> findAll(Pageable pageable);
+    @Query("SELECT log FROM Log log WHERE (lower(log.type) like lower(?1)) ORDER BY log.timestamp DESC")
+    Page<Log> searchByType(Pageable pageable, String typeToFilter);
 }

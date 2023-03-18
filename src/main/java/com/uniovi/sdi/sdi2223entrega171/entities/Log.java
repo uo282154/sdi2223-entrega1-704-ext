@@ -1,9 +1,6 @@
 package com.uniovi.sdi.sdi2223entrega171.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 @Entity
 @Table(name="logItem")
@@ -11,14 +8,15 @@ public class Log {
     @Id
     @GeneratedValue
     private long id;
-    public enum LogItemType {
-        PET, ALTA, LOGIN_EX, LOGIN_ERR, LOGOUT ;
-        @Override
-        public String toString() {
-            return this.name().replace('_', '-');
-        }
-    }
 
+    public enum LogItemType {
+        PET("PET"), ALTA("ALTA"), LOGIN_EX("LOGIN-EX"), LOGIN_ERR("LOGIN-ERR"), LOGOUT("LOGOUT") ;
+
+        String name;
+        LogItemType(String name) { this.name = name;}
+
+    }
+    @Enumerated(EnumType.STRING)
     private LogItemType type;
     private Timestamp timestamp; //new Timestamp(System.currentTimeMillis())
     private String action;
@@ -27,7 +25,7 @@ public class Log {
     public Log() {
     }
 
-    public Log(long id, LogItemType type, Timestamp timestamp, String action, String description) {
+    public Log(LogItemType type, Timestamp timestamp, String action, String description) {
         this.id = id;
         this.type = type;
         this.timestamp = timestamp;

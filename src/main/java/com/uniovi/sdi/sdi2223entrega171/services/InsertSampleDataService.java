@@ -1,11 +1,14 @@
 package com.uniovi.sdi.sdi2223entrega171.services;
 
+import com.uniovi.sdi.sdi2223entrega171.entities.Log;
 import com.uniovi.sdi.sdi2223entrega171.entities.Offer;
 import com.uniovi.sdi.sdi2223entrega171.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +23,8 @@ public class InsertSampleDataService {
 
     @Autowired
     private  OffersService offersService;
+    @Autowired
+    private  LogService logService;
 
     @PostConstruct
     public void init() {
@@ -58,6 +63,16 @@ public class InsertSampleDataService {
         offersService.addOffer(offer1);
         offersService.addOffer(offer2);
         offersService.addOffer(offer3);
+
+
+
+        Log log1 = new Log(Log.LogItemType.PET, new Timestamp(new Date().getTime()), "/InsertSampleData", "Log n1");
+        Log log2 = new Log(Log.LogItemType.LOGIN_ERR, new Timestamp(new Date().getTime()), "/InsertSampleData", "Log n2");
+        Log log3 = new Log(Log.LogItemType.LOGOUT, new Timestamp(new Date().getTime()), "/InsertSampleData", "Log n3");
+
+        logService.addLog(log1);
+        logService.addLog(log2);
+        logService.addLog(log3);
     }
 
 }
