@@ -22,8 +22,8 @@
 <form th:action="@{/chat/{offerId}/{username}/add(offerId=${offerChat.id}, username=${myUserChat.email})}"
       method="post">
     <input class="form-control" size="50"
-           placeholder="Mensaje a enviar..." type="text" name="message" id="message" required/>
-    <button id="submitBtn" class="btn btn-primary" th:disabled="${#strings.isEmpty(message)}" type="submit">Enviar</button>
+           type="text" name="message" id="message" required/>
+    <button id="submitBtn" class="btn btn-primary" th:disabled="${#strings.isEmpty(message)}" type="submit" th:text="signup.send"></button>
 </form>
 <script>
     const messageInput = document.getElementById('message');
