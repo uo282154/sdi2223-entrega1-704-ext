@@ -9,7 +9,7 @@
 
 
     <form class="form-inline" action="/log/list">
-        <label class="control-label col-sm-2" for="typeFilter" th:text = "#{log.filter.title}"></label>
+        <label class="control-label col-sm-3 ml-30"  for="typeFilter" th:text = "#{log.filter.title}"></label>
         <div class="col-sm-10" th:if="${typesList != null and not #lists.isEmpty(typesList)}">
             <select id="typeFilter" class="form-control" name="typeToFilter" >
                 <option th:each="type : ${typesList}"
@@ -18,41 +18,11 @@
                 </option>
             </select>
 
-            <button type="submit" class="btn btn-primary" th:text="#{log.filter.btn}">F</button>
-
-            <button type="button" id="showAllBtn" class="btn btn-primary" th:text="#{log.showAll.btn}">SA</button>
-            <script th:inline="javascript">
-                /*<![CDATA[*/
-                $( "#showAllBtn" ).click(function() {
-                    let numberPage = [[${param.page}]];
-                    let urlUpdate = '/log/list/update';
-                    if (numberPage != null ){
-                        urlUpdate += "?page=0";
-                    }
-                    $("#tableLogs").load(urlUpdate);
-                });
-                /*]]>*/
-            </script>
+            <button type="submit" class="btn btn-dark" th:text="#{log.filter.btn}">F</button>
         </div>
     </form>
-
-
-<!--    ----------------------------------------------------------------->
+    <br>
     <p>Actividades:</p>
-    <button type="button" id="updateButton" class="btn btn-primary" th:text="#{log.table.update.btn}">Actualizar</button>
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        $( "#updateButton" ).click(function() {
-            let numberPage = [[${param.page}]];
-            let urlUpdate = '/log/list/update';
-            if (numberPage != null ){
-                urlUpdate += "?page="+numberPage[0];
-            }
-            $("#tableLogs").load(urlUpdate);
-        });
-        /*]]>*/
-    </script>
-
     <div class="table-responsive" id="tableLogs">
             <table class="table table-hover" >
                 <thead>

@@ -61,9 +61,9 @@
                    aria-haspopup="true" aria-expanded="false" th:text="#{nav.logs.title}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/log/list"
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/log/list" id = "showLogsList"
                        th:text="#{nav.logs.list}">L</a>
-                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/log/deleteAll"
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/log/deleteAll" id = "deleteAllLogsBtn"
                        th:text="#{nav.logs.deleteAll}">D</a>
                 </div>
 

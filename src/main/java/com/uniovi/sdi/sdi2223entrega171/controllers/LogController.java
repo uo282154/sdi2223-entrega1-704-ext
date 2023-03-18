@@ -2,6 +2,7 @@ package com.uniovi.sdi.sdi2223entrega171.controllers;
 
 import com.uniovi.sdi.sdi2223entrega171.entities.Log;
 import com.uniovi.sdi.sdi2223entrega171.services.LogService;
+import com.uniovi.sdi.sdi2223entrega171.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,7 +22,8 @@ public class LogController {
     @Autowired
     private LogService logService;
 
-
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @RequestMapping("/log/list")
     public String getList(Model model, Pageable pageable, Principal principal, @RequestParam(value = "", required = false) String typeToFilter){
@@ -32,6 +34,7 @@ public class LogController {
             logs = logService.getLogs(pageable);
         }
 
+        model.addAttribute("user",  userDetailsService.getActiveUser());
         model.addAttribute("typesList", logService.getTypesLog());
         model.addAttribute("logsList", logs.getContent());
         model.addAttribute("page", logs);
@@ -42,6 +45,7 @@ public class LogController {
     @RequestMapping("/log/list/update")
     public String updateList(Model model, Pageable pageable) {
 
+        model.addAttribute("user",  userDetailsService.getActiveUser());
         model.addAttribute("typesList", logService.getTypesLog());
         model.addAttribute("logsList", logService.getLogs(pageable).getContent());
 
