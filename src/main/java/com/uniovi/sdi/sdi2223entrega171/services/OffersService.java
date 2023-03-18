@@ -46,7 +46,7 @@ public class OffersService {
     public Page<Offer> getMyOffers(Pageable pageable, User user) {
         return offerRepository.findMyOffers(pageable, user);
     }
-
+¡-
     public List<Offer> getSoldOffers(User user) {
         return offerRepository.findSoldOffers(user);
     }
