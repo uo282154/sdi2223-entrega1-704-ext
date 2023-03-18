@@ -55,20 +55,6 @@
 
             </li>
         </ul>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link dropdown-toggle" href="#" id="logsDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false" th:text="#{nav.logs.title}">
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/log/list" id = "showLogsList"
-                       th:text="#{nav.logs.list}">L</a>
-                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="/log/deleteAll" id = "deleteAllLogsBtn"
-                       th:text="#{nav.logs.deleteAll}">D</a>
-                </div>
-
-            </li>
-        </ul>
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="btnLanguage" role="button"

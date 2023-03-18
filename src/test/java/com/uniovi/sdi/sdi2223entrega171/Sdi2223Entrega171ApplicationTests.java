@@ -16,12 +16,10 @@ import java.util.List;
 class Sdi2223Entrega171ApplicationTests {
 
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    //static String Geckodriver = "C:\\Path\\geckodriver-v0.30.0-win64.exe";
-//    static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
-    static String Geckodriver = "C:\\Users\\jorge\\Desktop\\geckodriver-v0.30.0-win64\\geckodriver.exe";
+    static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
-    //Común a Windows y a MACOSX
+
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
 
@@ -222,99 +220,4 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
         Assertions.assertEquals(1, userList2.size());
     }
-
-//    [Prueba30] Intentar acceder sin estar autenticado a la opción de listado de usuarios. Se deberá volver al
-//    formulario de login.
-    @Test
-    @Order(30)
-    public void PR30() {
-        driver.navigate().to("http://localhost:8090/user/list");
-
-        String checkText = "Identificate";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-        Assertions.assertEquals(checkText, result.get(0).getText());
-    }
-
-
-
-
-//    [Prueba32] Estando autenticado como usuario estándar intentar acceder a una opción disponible solo
-//    para usuarios administradores (Añadir menú de auditoria (visualizar logs)). Se deberá indicar un mensaje
-//    de acción prohibida.
-    @Test
-    @Order(32)
-    public void PR32() {
-        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
-        PO_SignUpView.fillForm(driver, "email32@gmail.com", "Josefo", "Perez", "77877", "77777");
-
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "email32@gmail.com", "77877");
-
-        driver.navigate().to("http://localhost:8090/log/list");
-
-        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "Logs", PO_View.getTimeout());
-    }
-
-//    [Prueba33] Estando autenticado como usuario administrador visualizar todos los logs generados en una
-//    serie de interacciones. Esta prueba deberá generar al menos dos interacciones de cada tipo y comprobar
-//    que el listado incluye los logs correspondientes.
-    @Test
-    @Order(33)
-    public void PR33() {
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-        PO_SignUpView.fillForm(driver, "aaaaa@gmail.com", "aaaaa", "aaaaa aaaaa", "123456", "123456");
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
-
-        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-        PO_SignUpView.fillForm(driver, "bbbbb@gmail.com", "bbbbb", "bbbbb bbbbb", "123456", "123456");
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
-
-        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "patata");
-        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "patata");
-
-        PO_LoginView.fillLoginForm(driver, "user01@gmail.com", "user01");
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
-
-        PO_LoginView.fillLoginForm(driver, "user02@gmail.com", "user02");
-        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
-
-        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
-        PO_HomeView.clickOption(driver, "/admin/logs", "class", "btn btn-primary");
-
-        SeleniumUtils.textIsPresentOnPage(driver, "LOGIN-EX");
-        SeleniumUtils.textIsPresentOnPage(driver, "LOGIN-ERR");
-        SeleniumUtils.textIsPresentOnPage(driver, "PET");
-        SeleniumUtils.textIsPresentOnPage(driver, "ALTA");
-        SeleniumUtils.textIsPresentOnPage(driver, "user01@gmail.com");
-        SeleniumUtils.textIsPresentOnPage(driver, "bbbbb@gmail.com");
-        SeleniumUtils.textIsPresentOnPage(driver, "aaaaa@gmail.com");
-        SeleniumUtils.textIsPresentOnPage(driver, "user02@gmail.com");
-        SeleniumUtils.textIsPresentOnPage(driver, "GET");
-        SeleniumUtils.textIsPresentOnPage(driver, "POST");
-        SeleniumUtils.textIsPresentOnPage(driver, "POST");
-        SeleniumUtils.textIsPresentOnPage(driver, "gmail=aaaaa@gmail.com&name=aaaaalastName=aaaaa aaaaa&password=*****&passwordConfirm=*****");
-        SeleniumUtils.textIsPresentOnPage(driver, "Mapping: /signup Método: POST Parámetros: gmail=aaaaa@gmail.com&name=aaaaa&lastName=aaaaa aaaaa&password=*****&passwordConfirm=*****");
-    }
-
-//    [Prueba34] Estando autenticado como usuario administrador, ir a visualización de logs, pulsar el
-//    botón/enlace borrar logs y comprobar que se eliminan los logs de la base de datos.
-    @Test
-    @Order(34)
-    public void PR34() {
-
-        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
-        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
-
-        PO_NavView.clickOption(driver, "/log/deleteAll", "id", "deleteAllLogsBtn");
-
-//        PO_NavView.clickOption(driver, "/log/list", "class", "btn btn-primary");
-//        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "LOGIN-EX", PO_View.getTimeout());
-
-        PO_NavView.clickOption(driver,"/log/deleteAll","id","deleteAllLogsBtn");
-
-        PO_NavView.clickOption(driver,"/log/list","id","showLogsList");
-        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "logsList",PO_View.getTimeout());
-        Assertions.assertEquals(2, userList.size());
-    }
-
 }
