@@ -65,14 +65,9 @@ public class InsertSampleDataService {
         offersService.addOffer(offer3);
 
 
-
-        Log log1 = new Log(Log.LogItemType.PET, new Timestamp(new Date().getTime()), "/InsertSampleData", "Log n1");
-        Log log2 = new Log(Log.LogItemType.LOGIN_ERR, new Timestamp(new Date().getTime()), "/InsertSampleData", "Log n2");
-        Log log3 = new Log(Log.LogItemType.LOGOUT, new Timestamp(new Date().getTime()), "/InsertSampleData", "Log n3");
-
-        logService.addLog(log1);
-        logService.addLog(log2);
-        logService.addLog(log3);
+        logService.addLog(Log.LogItemType.PET, "Log n1");
+        logService.addLog(Log.LogItemType.LOGIN_ERR, "Log n2");
+        logService.addLog(Log.LogItemType.LOGOUT, "Log n3");
     }
 
 }

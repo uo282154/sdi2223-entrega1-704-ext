@@ -19,17 +19,15 @@ public class Log {
     @Enumerated(EnumType.STRING)
     private LogItemType type;
     private Timestamp timestamp; //new Timestamp(System.currentTimeMillis())
-    private String action;
     private String description;
 
     public Log() {
     }
 
-    public Log(LogItemType type, Timestamp timestamp, String action, String description) {
+    public Log(LogItemType type, Timestamp timestamp, String description) {
         this.id = id;
         this.type = type;
         this.timestamp = timestamp;
-        this.action = action;
         this.description = description;
     }
 
@@ -44,14 +42,6 @@ public class Log {
     }
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
     }
 
     public String getDescription() {

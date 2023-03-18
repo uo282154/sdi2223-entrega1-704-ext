@@ -1,11 +1,11 @@
 package com.uniovi.sdi.sdi2223entrega171.controllers;
 
+import com.uniovi.sdi.sdi2223entrega171.entities.Log;
 import com.uniovi.sdi.sdi2223entrega171.entities.User;
-import com.uniovi.sdi.sdi2223entrega171.services.RolesService;
-import com.uniovi.sdi.sdi2223entrega171.services.SecurityService;
-import com.uniovi.sdi.sdi2223entrega171.services.UserDetailsServiceImpl;
-import com.uniovi.sdi.sdi2223entrega171.services.UsersService;
+import com.uniovi.sdi.sdi2223entrega171.services.*;
 import com.uniovi.sdi.sdi2223entrega171.validators.SignUpFormValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +31,9 @@ public class UsersController {
     private UserDetailsServiceImpl userDetailsService;
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private LogService logService;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signup(@Validated User user, BindingResult result) {
         signUpFormValidator.validate(user,result);
@@ -39,6 +42,13 @@ public class UsersController {
         }
         user.setRole(rolesService.getRoles()[0]);
         usersService.addUser(user);
+
+        logger.info("New user signed up with email " + user.getEmail());
+
+        String description = "New user signed up with email=" + user.getEmail() + "&name=" + user.getName() + "lastName=" +
+                user.getSurname() + "&password=*****&passwordConfirm=*****";
+        logService.addLog(Log.LogItemType.ALTA,  description);
+
         return "redirect:home";
     }
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
