@@ -37,6 +37,10 @@ public class Offer {
     @ManyToOne
     private User buyer; // usuario que ha comprado la oferta
 
+
+
+
+    private String creatorEmail; // para mostrar en la lista de ofertas compradas
     public Offer() {
         //La oferta tiene que tener estado created (en el offerController al crearla)
         //this.createAt = LocalDate.now(); (en el controller¿?)
@@ -50,6 +54,16 @@ public class Offer {
         this.status = STATUS_ACTIVE;         //En el controller?¿
         this.createAt = LocalDate.now();
         this.creator = user;
+    }
+
+    public Offer(String title, String description, double price, User user, User buyer) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.status = STATUS_ACTIVE;         //En el controller?¿
+        this.createAt = LocalDate.now();
+        this.creator = user;
+        this.buyer = buyer;
     }
 
     public Long getId() {
@@ -119,4 +133,13 @@ public class Offer {
     public void setBuyer(User buyer) {
         this.buyer = buyer;
     }
+
+    public String getCreatorEmail() {
+        return creatorEmail;
+    }
+
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
+    }
+
 }
