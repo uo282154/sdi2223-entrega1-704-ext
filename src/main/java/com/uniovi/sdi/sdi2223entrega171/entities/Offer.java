@@ -3,6 +3,7 @@ package com.uniovi.sdi.sdi2223entrega171.entities;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="offer")
@@ -27,6 +28,9 @@ public class Offer {
 
     private LocalDate createAt;
 
+    @OneToMany(mappedBy="offer")
+    private List<Chat> chats;
+
     @ManyToOne
     private User creator; //usuario que crea la oferta
 
@@ -45,7 +49,7 @@ public class Offer {
         this.price = price;
         this.status = STATUS_ACTIVE;         //En el controller?¿
         this.createAt = LocalDate.now();
-        this.creator = user;    //PARA PRUEBAS!!
+        this.creator = user;
     }
 
     public Long getId() {

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<!-- Barra de Navegación superior -->
+<nav th:replace="fragments/nav"/>
+
+<div class="container">
+    <h2>Todas las chats</h2>
+
+    <p>Los chats activos en el sistema son:</p>
+    <div class="table-responsive">
+        <table class="table table-hover" id="tableChats">
+            <thead>
+            <tr>
+                <th scope="col"><span th:text="#{offer.title}"></span></th>
+                <th scope="col"><span th:text="#{chat.fullname}"></span></th>
+                <th scope="col"></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <div th:if="${not #lists.isEmpty(chatsList)}">
+            <tr th:each="chat : ${chatsList}">
+                <td scope="row" th:text="${chat.offer.title}">Oferta 1</td>
+                <td scope="row" th:text="${chat.receiver.getFullName()}">Paco Gonzalez</td>
+                <td scope="row">
+                    <a th:href="@{'/chat/' + ${chat.offer.id} + '/' + ${chat.sender.email}}" class="btn btn-primary"><span th:text="#{chat.enter}"></span></a>
+                </td>
+            </tr>
+            </div>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>
