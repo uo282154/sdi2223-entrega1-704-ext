@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -213,15 +214,20 @@ class Sdi2223Entrega171ApplicationTests {
         PO_NavView.clickOption(driver,"/user/list","id","listarUsers");
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
         Assertions.assertEquals(14, userList.size());
+        ArrayList<String> deletedIds = new ArrayList<String>();
 
         List<WebElement> result2 = PO_View.checkElementBy(driver, "class", "cb-user");
         for(int i = result2.size() - 3; i < result2.size() ; i++) {
             String id = result2.get(i).getAttribute("id");
+            deletedIds.add(id);
             PO_PrivateView.clickOption(driver, id);
         }
         PO_PrivateView.clickOption(driver,"delete");
         List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
-        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user14@gmail.com",PO_View.getTimeout());
+        for(String id : deletedIds) {
+            SeleniumUtils.waitTextIsNotPresentOnPage(driver, id,PO_View.getTimeout());
+        }
+
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user13@gmail.com",PO_View.getTimeout());
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user12@gmail.com",PO_View.getTimeout());
         Assertions.assertEquals(11, userList2.size());
