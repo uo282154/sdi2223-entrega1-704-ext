@@ -24,7 +24,7 @@ class Sdi2223Entrega171ApplicationTests {
 //    static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
     static String Geckodriver = "C:\\Users\\jorge\\Desktop\\geckodriver-v0.30.0-win64\\geckodriver.exe";
 
-    static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+//    static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
@@ -257,6 +257,55 @@ class Sdi2223Entrega171ApplicationTests {
         Assertions.assertEquals(text,elements.get(0).getText());
     }
 
+    //    [Prueba25] Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
+//    las ofertas que deben aparecer.
+    @Test
+    @Order(25)
+    public void PR25() {
+        driver.navigate().to("http://localhost:8090/login");
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        PO_SignUpView.fillForm(driver, "email25@gmail.com", "Josefo", "Perez", "11111", "11111");
+
+        // Crear oferta
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
+        elements.get(0).click();
+        List<WebElement> elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
+        elements2.get(0).click();
+        PO_OfferView.fillOfferForm(driver, "OfertaPrueba25", "Esta es una oferta de prueba25", "25");
+        // salimos
+        PO_HomeView.clickOption(driver, "logout", "id", "loginbtn");
+
+        // registrar user2
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        PO_SignUpView.fillForm(driver, "email252@gmail.com", "Josefo", "Perez", "11111", "11111");
+
+        // ver que no tiene compras
+        elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
+        elements.get(0).click();
+        elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/myBoughts')]");
+        elements2.get(0).click();
+
+
+
+        //sacamos la id de
+        elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/listAll')]");
+        elements2.get(0).click();
+
+        List<WebElement> list = SeleniumUtils.waitLoadElementsBy(driver, "class", "offerBotiItem", PO_View.getTimeout());
+        String idOffer = list.get(list.size()-1).getAttribute("id");
+
+        driver.get("http://localhost:8090/offer/buy/"+idOffer);
+
+
+        // ver que tiene compras
+        elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
+        elements.get(0).click();
+        elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/myBoughts')]");
+        elements2.get(0).click();
+
+        SeleniumUtils.textIsPresentOnPage(driver, "OfertaPrueba25");
+    }
+
     @Test
     @Order(26)
     public void PR26() {
@@ -320,28 +369,7 @@ class Sdi2223Entrega171ApplicationTests {
     }
 
 
-//    [Prueba25] Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
-//    las ofertas que deben aparecer.
-    @Test
-    @Order(25)
-    public void PR25() {
-        driver.navigate().to("http://localhost:8090/login");
-        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
-        PO_SignUpView.fillForm(driver, "email25@gmail.com", "Josefo", "Perez", "11111", "11111");
 
-        // Crear oferta
-
-        // registrar user2
-
-        // ver que no tiene compras
-
-        // comprar oferta
-
-        // ver que tiene una oferta
-
-
-
-    }
 
 
     //    [Prueba30] Intentar acceder sin estar autenticado a la opción de listado de usuarios. Se deberá volver al
