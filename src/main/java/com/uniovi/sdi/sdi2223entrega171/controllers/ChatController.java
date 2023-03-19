@@ -91,14 +91,13 @@ public class ChatController {
     @RequestMapping(value = "/chat/{offerId}/{username}/add", method = RequestMethod.POST)
     public String addMessage(@PathVariable Long offerId, @PathVariable String username, @RequestParam("message") String message){
         User myUser = usersService.getUserByEmail(username);
-        //User userCreator = usersService.getUser(creatorId);
         Offer offer = offersService.getOffer(offerId);
-        Chat chat = chatService.findChatByOfferAndSender(offer, myUser);     //mover al servicio
+        Chat chat = chatService.findChatByOfferAndSender(offer, myUser);        //mover a servicio
         if (chat == null){
             chat = chatService.findChatByOfferAndSender(offer, myUser);
         };
-        if (chat == null){                                                                          //mover al servicio
-            chat = new Chat(offer.getBuyer(), offer.getCreator(), offer);                           //mover al servicio
+        if (chat == null){
+            chat = new Chat(offer.getBuyer(), offer.getCreator(), offer);
         }
         if(chat.getSender() == null){
             chat.setSender(userDetailsService.getActiveUser());
@@ -107,9 +106,6 @@ public class ChatController {
         if(!userDetailsService.isUserInChat(chat.getId(), username, offerId)){
             throw new AccessDeniedException("No tienes acceso a este recurso");
         }
-                                                //mover al servicio
-
-
 
         return "redirect:/chat/" + offerId + '/' + myUser.getEmail();
     }
