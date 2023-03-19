@@ -44,6 +44,21 @@ public class PO_NavView extends PO_View{
         //Tiene que haber un sólo elemento.
         //Assertions.assertEquals(1, elements.size());
     }
+
+    public static void clickOptionOfDropDown(WebDriver driver,String criterio, String dropDownMenu,  String btnOfDropDown) {
+        //Abre la opcion x del menu
+        List<WebElement> logButton = SeleniumUtils.waitLoadElementsBy(driver, "id", dropDownMenu,
+                getTimeout());
+        logButton.get(0).click();
+        //Esperamos a que aparezca el menú de opciones.
+        SeleniumUtils.waitLoadElementsBy(driver, "id", "logDropdownMenuButton", getTimeout());
+        //CLickamos la opción
+        List<WebElement> opt = SeleniumUtils.waitLoadElementsBy(driver, "id", btnOfDropDown,
+                getTimeout());
+        opt.get(0).click();
+    }
+
+
     /**
      * Selecciona el enlace de idioma correspondiente al texto textLanguage
      * @param driver: apuntando al navegador abierto actualmente.

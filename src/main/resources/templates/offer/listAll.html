@@ -28,11 +28,11 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="offer : ${offersList}">
+      <tr th:each="offer : ${offersList}" >
         <td scope="row" th:text="${offer.title}">Oferta 1</td>
         <td scope="row" th:text="${offer.description}">Oferta 2</td>
         <td scope="row" th:text="${offer.price}">2€</td>
-        <td th:if="${offer.status=='ACTIVE'}" ><a  th:href="${'/offer/buy/' + offer.id} " th:text="#{offer.buy}">Comprar</a>
+        <td th:if="${offer.status=='ACTIVE'}" ><a class="offerBotiItem" th:id="${offer.id}" th:href="${'/offer/buy/' + offer.id} " th:text="#{offer.buy}">Comprar</a>
         </td>
         <td th:if="${offer.status=='SOLD'}" th:text="#{offer.sold}" >Vendido
         </td>
