@@ -58,6 +58,7 @@ class Sdi2223Entrega171ApplicationTests {
         driver.quit();
     }
 
+    // [Prueba1] Registro de Usuario con datos válidos.
     @Test
     @Order(1)
     public void PR01() {
@@ -69,6 +70,7 @@ class Sdi2223Entrega171ApplicationTests {
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
+    //[Prueba2] Registro de Usuario con datos inválidos (email vacío, nombre vacío, apellidos vacíos).
     @Test
     @Order(2)
     public void PR02() {
@@ -78,7 +80,7 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id", "signupbtn");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
-
+    //  [Prueba3] Registro de Usuario con datos inválidos (repetición de contraseña inválida).
     @Test
     @Order(3)
     public void PR03() {
@@ -88,7 +90,7 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id", "signupbtn");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
-
+    //[Prueba4] Registro de Usuario con datos inválidos (email existente).
     @Test
     @Order(4)
     public void PR04() {
@@ -98,7 +100,7 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id", "signupbtn");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
-
+    // [Prueba5] Inicio de sesión con datos válidos (administrador).
     @Test
     @Order(5)
     public void PR05() {
@@ -108,7 +110,7 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id","listarUsers");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
-
+    // [Prueba6] Inicio de sesión con datos válidos (usuario estándar).
     @Test
     @Order(6)
     public void PR06() {
@@ -117,7 +119,7 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id", "offerDropdown");
         Assertions.assertEquals("offerDropdown", result.get(0).getAttribute("id"));
     }
-
+    // [Prueba7] Inicio de sesión con datos inválidos (usuario estándar, campo email y contraseña vacíos).
     @Test
     @Order(7)
     public void PR07() {
@@ -127,7 +129,8 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id", "loginbtn");
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
-
+    // [Prueba8] Inicio de sesión con datos válidos (usuario estándar, email existente, pero contraseña
+    //incorrecta).
     @Test
     @Order(8)
     public void PR08() {
@@ -137,7 +140,8 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
-
+    //[Prueba9] Hacer clic en la opción de salir de sesión y comprobar que se redirige a la página de inicio de
+    //sesión (Login).
     @Test
     @Order(9)
     public void PR09() {
@@ -150,13 +154,14 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result2 = PO_View.checkElementBy(driver, "id", "loginText");
         Assertions.assertEquals(checkText2, result2.get(0).getText());
     }
-
+    //[Prueba10] Comprobar que el botón cerrar sesión no está visible si el usuario no está autenticado.
     @Test
     @Order(10)
     public void PR10() {
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, "Desconectar", getTimeout());
     }
-
+    //[Prueba11] Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el
+    //sistema.
     @Test
     @Order(11)
     public void PR11() {
@@ -169,7 +174,8 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
         Assertions.assertEquals(16, userList.size());
     }
-
+    //[Prueba12] Ir a la lista de usuarios, borrar el primer usuario de la lista, comprobar que la lista se actualiza
+    //y dicho usuario desaparece.
     @Test
     @Order(12)
     public void PR12() {
@@ -188,7 +194,8 @@ class Sdi2223Entrega171ApplicationTests {
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user01@gmail.com",PO_View.getTimeout());
         Assertions.assertEquals(15, userList2.size());
     }
-
+    //[Prueba13] Ir a la lista de usuarios, borrar el último usuario de la lista, comprobar que la lista se actualiza
+    //y dicho usuario desaparece.
     @Test
     @Order(13)
     public void PR13() {
@@ -209,7 +216,8 @@ class Sdi2223Entrega171ApplicationTests {
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user15@gmail.com",PO_View.getTimeout());
         Assertions.assertEquals(14, userList2.size());
     }
-
+    //[Prueba14] Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichos
+    //usuarios desaparecen.
     @Test
     @Order(14)
     public void PR14() {
@@ -239,7 +247,8 @@ class Sdi2223Entrega171ApplicationTests {
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user12@gmail.com",PO_View.getTimeout());
         Assertions.assertEquals(11, userList2.size());
     }
-
+//   [Prueba17] Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas los que
+//    existen para este usuario
     @Test
     @Order(17)
     public void PR17() {
@@ -308,6 +317,9 @@ class Sdi2223Entrega171ApplicationTests {
         SeleniumUtils.textIsPresentOnPage(driver, "OfertaPrueba25");
     }
 
+    //[Prueba26] Sobre una búsqueda determinada de ofertas (a elección de desarrollador), enviar un mensaje
+    //a una oferta concreta. Se abriría dicha conversación por primera vez. Comprobar que el mensaje aparece
+    //en la conversación
     @Test
     @Order(26)
     public void PR26() {
@@ -330,7 +342,8 @@ class Sdi2223Entrega171ApplicationTests {
         elements = PO_View.checkElementBy(driver, "class", "mb-0");
         Assertions.assertEquals(textSaludo, elements.get(0).getText());
     }
-
+    //[Prueba27] Enviar un mensaje a una conversación ya existente accediendo desde el botón/enlace
+    //“Conversación”. Comprobar que el mensaje aparece en la conversación
     @Test
     @Order(27)
     public void PR27() {
@@ -357,7 +370,8 @@ class Sdi2223Entrega171ApplicationTests {
 
         Assertions.assertEquals(textNuevo, elements.get(1).getText());
     }
-
+//[Prueba28] Mostrar el listado de conversaciones ya abiertas. Comprobar que el listado contiene la
+//cantidad correcta de conversaciones.
     @Test
     @Order(28)
     public void PR28() {
@@ -369,7 +383,8 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> chatsList = SeleniumUtils.waitLoadElementsBy(driver, "class", "chatTrItem",PO_View.getTimeout());
         Assertions.assertEquals(1, chatsList.size());
     }
-
+//[Prueba15] Ir al formulario de alta de oferta, rellenarla con datos válidos y pulsar el botón Enviar.
+//Comprobar que la oferta sale en el listado de ofertas de dicho usuario.
     @Test
     @Order(15)
     public void PR15(){
@@ -385,7 +400,8 @@ class Sdi2223Entrega171ApplicationTests {
 
     }
 
-
+//[Prueba16] Ir al formulario de alta de oferta, rellenarla con datos inválidos (precio negativo) y pulsar el
+//botón Enviar. Comprobar que se muestra el mensaje de campo inválido.
     @Test
     @Order(16)
     public void PR16(){
@@ -400,6 +416,8 @@ class Sdi2223Entrega171ApplicationTests {
         Assertions.assertEquals("El precio no puede ser negativo", result.get(0).getText());
 
     }
+    //[Prueba18] Ir a la lista de ofertas, borrar la primera oferta de la lista, comprobar que la lista se actualiza y
+    //que la oferta desaparece.
     @Test
     @Order(18)
     public void PR18() {
@@ -418,7 +436,8 @@ class Sdi2223Entrega171ApplicationTests {
         }
         Assertions.assertTrue(b);
     }
-
+//[Prueba19] Ir a la lista de ofertas, borrar la última oferta de la lista, comprobar que la lista se actualiza y
+//que la oferta desaparece.
     @Test
     @Order(19)
     public void PR19(){
@@ -437,6 +456,8 @@ class Sdi2223Entrega171ApplicationTests {
         }
         Assertions.assertTrue(b);
     }
+    //[Prueba20] Hacer una búsqueda con el campo vacío y comprobar que se muestra la página que
+    //corresponde con el listado de las ofertas existentes en el sistema
     @Test
     @Order(20)
     public void PR20(){
@@ -456,6 +477,8 @@ class Sdi2223Entrega171ApplicationTests {
         result =PO_PrivateView.checkElementBy(driver,"id","rowtest");
         Assertions.assertEquals(0,result.size());
     }
+    //[Prueba21] Hacer una búsqueda escribiendo en el campo un texto que no exista y comprobar que se
+    //muestra la página que corresponde, con la lista de ofertas vacía.
     @Test
     @Order(21)
     public void PR21(){
@@ -474,7 +497,9 @@ class Sdi2223Entrega171ApplicationTests {
         result =PO_PrivateView.checkElementBy(driver,"id","rowtest");
         Assertions.assertEquals(0,result.size());
     }
-
+//[Prueba22] Sobre una búsqueda determinada (a elección del desarrollador), comprar una oferta que deja
+//un saldo positivo en el contador del comprador. Comprobar que el contador se actualiza correctamente
+//en la vista del comprador.
     @Test
     @Order(22)
     public void PR22() {
@@ -486,8 +511,11 @@ class Sdi2223Entrega171ApplicationTests {
         Assertions.assertEquals("78.0",result.get(0).getText());
 
     }
+    //[Prueba23] Sobre una búsqueda determinada (a elección del desarrollador), comprar una oferta que deja
+    //un saldo 0 en el contador del comprador. Comprobar que el contador se actualiza correctamente en la
+    //vista del comprador.
     @Test
-    @Order(3)
+    @Order(23)
     public void PR23() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
         //Rellenamos el formulario
@@ -497,8 +525,11 @@ class Sdi2223Entrega171ApplicationTests {
         Assertions.assertEquals("0.0",result.get(0).getText());
 
     }
+    //[Prueba24] Sobre una búsqueda determinada (a elección del desarrollador), intentar comprar una oferta
+    //que esté por encima de saldo disponible del comprador. Y comprobar que se muestra el mensaje de
+    //saldo no suficiente
     @Test
-    @Order(3)
+    @Order(24)
     public void PR24() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
         //Rellenamos el formulario
@@ -508,10 +539,6 @@ class Sdi2223Entrega171ApplicationTests {
         Assertions.assertEquals("100.0",result.get(0).getText());
 
     }
-
-
-
-
 
 
     //    [Prueba30] Intentar acceder sin estar autenticado a la opción de listado de usuarios. Se deberá volver al
