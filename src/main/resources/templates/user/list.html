@@ -25,7 +25,7 @@
                     <td scope="row" th:text="${admin.surname}">Apellidos del alumno</td>
                     <td scope="row" ><i class="fas fa-user"></i></td>
                 </tr>
-                <tr th:each="user : ${usersList}" class="userTrItem">
+                <tr th:each="user, iter : ${usersList}" class="userTrItem">
                     <td scope="row" th:text="${user.email}">71888888X</td>
                     <td scope="row" th:text="${user.name}">Nombre del alumno</td>
                     <td scope="row" th:text="${user.surname}">Apellidos del alumno</td>

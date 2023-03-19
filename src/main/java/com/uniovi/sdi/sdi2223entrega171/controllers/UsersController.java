@@ -39,6 +39,7 @@ public class UsersController {
         }
         user.setRole(rolesService.getRoles()[0]);
         usersService.addUser(user);
+        securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
         return "redirect:home";
     }
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
