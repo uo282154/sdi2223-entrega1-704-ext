@@ -33,7 +33,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="log : ${logsList}">
+      <tr th:each="log : ${logsList}" class="logTrItem">
         <td scope="row" th:text="${log.type}">T</td>
         <td scope="row" th:text="${log.timestamp}">Ts</td>
         <td scope="row" th:text="${log.description}">D</td>
