@@ -8,7 +8,7 @@
 <div class="container" style="text-align: center">
   <h2 th:text="#{offer.bought}"></h2>
   <p><span th:text="#{offer.buy.congratulations}+' '+${offer.title}"></span></p>
-  <a href="/offer/listAll"> Continuar </a>
+  <a href="/offer/listAll" th:text="#{bought.continue}"> Continuar </a>
 </div>
 
 <footer th:replace="fragments/footer"/>

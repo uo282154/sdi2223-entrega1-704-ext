@@ -3,9 +3,7 @@ package com.uniovi.sdi.sdi2223entrega171;
 import com.uniovi.sdi.sdi2223entrega171.pageobjects.*;
 import com.uniovi.sdi.sdi2223entrega171.util.SeleniumUtils;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,10 +15,13 @@ import java.util.List;
 class Sdi2223Entrega171ApplicationTests {
 
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    //static String Geckodriver = "C:\\Path\\geckodriver-v0.30.0-win64.exe";
+    //static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\uni\\tercero\\sdi\\practica 2\\geckodriver-v0.30.0-win64.exe";
 
     //static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
-    static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+    //static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
@@ -314,4 +315,144 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> chatsList = SeleniumUtils.waitLoadElementsBy(driver, "class", "chatTrItem",PO_View.getTimeout());
         Assertions.assertEquals(1, chatsList.size());
     }
+
+    @Test
+    @Order(15)
+    public void PR15(){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
+        driver.get("localhost:8090/offer/add");
+        PO_AddOfferView.fillAddForm(driver,"Oferta de prueba","Esto es para una prueba","50");
+        driver.get("localhost:8090/offer/my");
+        List<WebElement> result=PO_View.checkElementBy(driver,"text","Oferta de prueba");
+
+        Assertions.assertEquals("Oferta de prueba", result.get(0).getText());
+
+    }
+
+
+    @Test
+    @Order(16)
+    public void PR16(){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
+        driver.get("localhost:8090/offer/add");
+        PO_AddOfferView.fillAddForm(driver,"Oferta de prueba","Esto es para una prueba","-50");
+
+        List<WebElement> result=PO_View.checkElementBy(driver,"text","El precio no puede ser negativo");
+
+        Assertions.assertEquals("El precio no puede ser negativo", result.get(0).getText());
+
+    }
+    @Test
+    @Order(18)
+    public void PR18() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
+        driver.get("localhost:8090/offer/my");
+
+        //List<WebElement> result=PO_View.checkElementBy(driver,"text","El precio no puede ser negativo");
+        PO_PrivateView.clickOptionNoAssert(driver, "/offer/delete/7", "href", "Eliminar");
+        Boolean b = false;
+        try {
+            List<WebElement> result = PO_View.checkElementBy(driver, "href", "/offer/delete/7");
+        } catch (Exception e) {
+            b=true;
+        }
+        Assertions.assertTrue(b);
+    }
+
+    @Test
+    @Order(19)
+    public void PR19(){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test2@gmail.com", "22222");
+        driver.get("localhost:8090/offer/my");
+
+        //List<WebElement> result=PO_View.checkElementBy(driver,"text","El precio no puede ser negativo");
+        PO_PrivateView.clickOptionNoAssert(driver,"/offer/delete/7","href","Eliminar");
+        Boolean b = false;
+        try {
+            List<WebElement> result = PO_View.checkElementBy(driver, "href", "/offer/delete/8");
+        } catch (Exception e) {
+            b=true;
+        }
+        Assertions.assertTrue(b);
+    }
+    @Test
+    @Order(20)
+    public void PR20(){
+        //Vamos al formulario de registro
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        //Rellenamos el formulario.
+        PO_SignUpView.fillForm(driver, "test20@gmail.com", "Josefo", "Perez", "77777", "77777");
+
+        PO_LoginView.fillLoginForm(driver, "test20@gmail.com", "77777");
+        driver.get("localhost:8090/offer/listAll");
+
+        List<WebElement> result =PO_PrivateView.checkElementBy(driver,"id","searchinput");
+        result.get(0).click();
+        result.get(0).sendKeys("123456789pruebatextosinsesentido");
+        result =PO_PrivateView.checkElementBy(driver,"text","Buscar");
+        result.get(0).click();
+        result =PO_PrivateView.checkElementBy(driver,"id","rowtest");
+        Assertions.assertEquals(0,result.size());
+    }
+    @Test
+    @Order(21)
+    public void PR21(){
+        //Vamos al formulario de registro
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        //Rellenamos el formulario.
+        PO_SignUpView.fillForm(driver, "test20@gmail.com", "Josefo", "Perez", "77777", "77777");
+
+        PO_LoginView.fillLoginForm(driver, "test20@gmail.com", "77777");
+        driver.get("localhost:8090/offer/listAll");
+
+        List<WebElement> result =PO_PrivateView.checkElementBy(driver,"id","searchinput");
+        result.get(0).click();
+        result.get(0).sendKeys("123456789pruebatextosinsesentido");
+        result.get(0).sendKeys(Keys.ENTER);
+        result =PO_PrivateView.checkElementBy(driver,"id","rowtest");
+        Assertions.assertEquals(0,result.size());
+    }
+
+    @Test
+    @Order(22)
+    public void PR22() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
+        driver.get("http://localhost:8090/offer/buy/8");
+        List<WebElement>result=PO_PrivateView.checkElementBy(driver,"id","actualmoney");
+        Assertions.assertEquals("78.0",result.get(0).getText());
+
+    }
+    @Test
+    @Order(3)
+    public void PR23() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test2@gmail.com", "22222");
+        driver.get("http://localhost:8090/offer/buy/9");
+        List<WebElement>result=PO_PrivateView.checkElementBy(driver,"id","actualmoney");
+        Assertions.assertEquals("0.0",result.get(0).getText());
+
+    }
+    @Test
+    @Order(3)
+    public void PR24() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test2@gmail.com", "22222");
+        driver.get("http://localhost:8090/offer/buy/10");
+        List<WebElement>result=PO_PrivateView.checkElementBy(driver,"id","actualmoney");
+        Assertions.assertEquals("100.0",result.get(0).getText());
+
+    }
+
 }
