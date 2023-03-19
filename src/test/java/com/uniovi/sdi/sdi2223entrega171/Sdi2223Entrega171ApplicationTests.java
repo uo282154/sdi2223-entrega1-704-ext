@@ -19,7 +19,7 @@ class Sdi2223Entrega171ApplicationTests {
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Path\\geckodriver-v0.30.0-win64.exe";
     //static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
-    static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\uni\\tercero\\sdi\\practica 2\\geckodriver-v0.30.0-win64.exe";
+//    static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\uni\\tercero\\sdi\\practica 2\\geckodriver-v0.30.0-win64.exe";
 
     //static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 //    static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -526,11 +526,16 @@ class Sdi2223Entrega171ApplicationTests {
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
+    //[Prueba31] Intentar acceder sin estar autenticado a la opción de listado de conversaciones de un
+    // usuario estándar. Se deberá volver al formulario de login.
     @Test
     @Order(31)
     public void PR31() {
-        // en el pdf este test no es de este proyecto
-        Assertions.assertTrue(true);
+        driver.navigate().to("http://localhost:8090/chat/list");
+
+        String checkText = "Identificate";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
 
