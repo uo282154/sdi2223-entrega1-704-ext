@@ -21,7 +21,7 @@ class Sdi2223Entrega171ApplicationTests {
 
     //static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
-    static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+    //static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
