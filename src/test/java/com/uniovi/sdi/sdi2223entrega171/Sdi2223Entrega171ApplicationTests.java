@@ -21,9 +21,9 @@ class Sdi2223Entrega171ApplicationTests {
     //static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 //    static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\uni\\tercero\\sdi\\practica 2\\geckodriver-v0.30.0-win64.exe";
 
-    //static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 //    static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
-    static String Geckodriver = "C:\\Users\\jorge\\Desktop\\geckodriver-v0.30.0-win64\\geckodriver.exe";
+    //static String Geckodriver = "C:\\Users\\jorge\\Desktop\\geckodriver-v0.30.0-win64\\geckodriver.exe";
 
     //static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 //    static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -247,7 +247,42 @@ class Sdi2223Entrega171ApplicationTests {
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user12@gmail.com",PO_View.getTimeout());
         Assertions.assertEquals(11, userList2.size());
     }
-//   [Prueba17] Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas los que
+
+
+//[Prueba15] Ir al formulario de alta de oferta, rellenarla con datos válidos y pulsar el botón Enviar.
+//Comprobar que la oferta sale en el listado de ofertas de dicho usuario.
+    @Test
+    @Order(15)
+    public void PR15(){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
+        driver.get("localhost:8090/offer/add");
+        PO_AddOfferView.fillAddForm(driver,"Oferta de prueba","Esto es para una prueba","50");
+        driver.get("localhost:8090/offer/my");
+        List<WebElement> result=PO_View.checkElementBy(driver,"text","Oferta de prueba");
+
+        Assertions.assertEquals("Oferta de prueba", result.get(0).getText());
+
+    }
+
+//[Prueba16] Ir al formulario de alta de oferta, rellenarla con datos inválidos (precio negativo) y pulsar el
+//botón Enviar. Comprobar que se muestra el mensaje de campo inválido.
+    @Test
+    @Order(16)
+    public void PR16(){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
+        driver.get("localhost:8090/offer/add");
+        PO_AddOfferView.fillAddForm(driver,"Oferta de prueba","Esto es para una prueba","-50");
+
+        List<WebElement> result=PO_View.checkElementBy(driver,"text","El precio no puede ser negativo");
+
+        Assertions.assertEquals("El precio no puede ser negativo", result.get(0).getText());
+
+    }
+    //   [Prueba17] Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas los que
 //    existen para este usuario
     @Test
     @Order(17)
@@ -266,6 +301,129 @@ class Sdi2223Entrega171ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//td[contains(text(), 'OfertaPrueba')]");
         String text = "OfertaPrueba";
         Assertions.assertEquals(text,elements.get(0).getText());
+    }
+    //[Prueba18] Ir a la lista de ofertas, borrar la primera oferta de la lista, comprobar que la lista se actualiza y
+    //que la oferta desaparece.
+    @Test
+    @Order(18)
+    public void PR18() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
+        driver.get("localhost:8090/offer/my");
+
+        //List<WebElement> result=PO_View.checkElementBy(driver,"text","El precio no puede ser negativo");
+        PO_PrivateView.clickOptionNoAssert(driver, "/offer/delete/7", "href", "Eliminar");
+        boolean b = false;
+        try {
+            List<WebElement> result = PO_View.checkElementBy(driver, "href", "/offer/delete/7");
+        } catch (Exception e) {
+            b=true;
+        }
+        Assertions.assertTrue(b);
+    }
+//[Prueba19] Ir a la lista de ofertas, borrar la última oferta de la lista, comprobar que la lista se actualiza y
+//que la oferta desaparece.
+    @Test
+    @Order(19)
+    public void PR19(){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test2@gmail.com", "22222");
+        driver.get("localhost:8090/offer/my");
+
+        //List<WebElement> result=PO_View.checkElementBy(driver,"text","El precio no puede ser negativo");
+        PO_PrivateView.clickOptionNoAssert(driver,"/offer/delete/7","href","Eliminar");
+        boolean b = false;
+        try {
+            List<WebElement> result = PO_View.checkElementBy(driver, "href", "/offer/delete/8");
+        } catch (Exception e) {
+            b=true;
+        }
+        Assertions.assertTrue(b);
+    }
+    //[Prueba20] Hacer una búsqueda con el campo vacío y comprobar que se muestra la página que
+    //corresponde con el listado de las ofertas existentes en el sistema
+    @Test
+    @Order(20)
+    public void PR20(){
+        //Vamos al formulario de registro
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        //Rellenamos el formulario.
+        PO_SignUpView.fillForm(driver, "test20@gmail.com", "Josefo", "Perez", "77777", "77777");
+
+        PO_LoginView.fillLoginForm(driver, "test20@gmail.com", "77777");
+        driver.get("localhost:8090/offer/listAll");
+
+        List<WebElement> result =PO_PrivateView.checkElementBy(driver,"id","searchinput");
+        result.get(0).click();
+        result.get(0).sendKeys("123456789pruebatextosinsesentido");
+        result =PO_PrivateView.checkElementBy(driver,"text","Buscar");
+        result.get(0).click();
+        result =PO_PrivateView.checkElementBy(driver,"id","rowtest");
+        Assertions.assertEquals(0,result.size());
+    }
+    //[Prueba21] Hacer una búsqueda escribiendo en el campo un texto que no exista y comprobar que se
+    //muestra la página que corresponde, con la lista de ofertas vacía.
+    @Test
+    @Order(21)
+    public void PR21(){
+        //Vamos al formulario de registro
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        //Rellenamos el formulario.
+        PO_SignUpView.fillForm(driver, "test20@gmail.com", "Josefo", "Perez", "77777", "77777");
+
+        PO_LoginView.fillLoginForm(driver, "test20@gmail.com", "77777");
+        driver.get("localhost:8090/offer/listAll");
+
+        List<WebElement> result =PO_PrivateView.checkElementBy(driver,"id","searchinput");
+        result.get(0).click();
+        result.get(0).sendKeys("123456789pruebatextosinsesentido");
+        result.get(0).sendKeys(Keys.ENTER);
+        result =PO_PrivateView.checkElementBy(driver,"id","rowtest");
+        Assertions.assertEquals(0,result.size());
+    }
+//[Prueba22] Sobre una búsqueda determinada (a elección del desarrollador), comprar una oferta que deja
+//un saldo positivo en el contador del comprador. Comprobar que el contador se actualiza correctamente
+//en la vista del comprador.
+    @Test
+    @Order(22)
+    public void PR22() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
+        driver.get("http://localhost:8090/offer/buy/8");
+        List<WebElement>result=PO_PrivateView.checkElementBy(driver,"id","actualmoney");
+        Assertions.assertEquals("78.0",result.get(0).getText());
+
+    }
+    //[Prueba23] Sobre una búsqueda determinada (a elección del desarrollador), comprar una oferta que deja
+    //un saldo 0 en el contador del comprador. Comprobar que el contador se actualiza correctamente en la
+    //vista del comprador.
+    @Test
+    @Order(23)
+    public void PR23() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test2@gmail.com", "22222");
+        driver.get("http://localhost:8090/offer/buy/9");
+        List<WebElement>result=PO_PrivateView.checkElementBy(driver,"id","actualmoney");
+        Assertions.assertEquals("0.0",result.get(0).getText());
+
+    }
+    //[Prueba24] Sobre una búsqueda determinada (a elección del desarrollador), intentar comprar una oferta
+    //que esté por encima de saldo disponible del comprador. Y comprobar que se muestra el mensaje de
+    //saldo no suficiente
+    @Test
+    @Order(24)
+    public void PR24() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
+        //Rellenamos el formulario
+        PO_LoginView.fillLoginForm(driver, "test2@gmail.com", "22222");
+        driver.get("http://localhost:8090/offer/buy/10");
+        List<WebElement>result=PO_PrivateView.checkElementBy(driver,"id","actualmoney");
+        Assertions.assertEquals("100.0",result.get(0).getText());
+
     }
 
     //    [Prueba25] Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
@@ -370,7 +528,7 @@ class Sdi2223Entrega171ApplicationTests {
 
         Assertions.assertEquals(textNuevo, elements.get(1).getText());
     }
-//[Prueba28] Mostrar el listado de conversaciones ya abiertas. Comprobar que el listado contiene la
+    //[Prueba28] Mostrar el listado de conversaciones ya abiertas. Comprobar que el listado contiene la
 //cantidad correcta de conversaciones.
     @Test
     @Order(28)
@@ -383,160 +541,84 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> chatsList = SeleniumUtils.waitLoadElementsBy(driver, "class", "chatTrItem",PO_View.getTimeout());
         Assertions.assertEquals(1, chatsList.size());
     }
-//[Prueba15] Ir al formulario de alta de oferta, rellenarla con datos válidos y pulsar el botón Enviar.
-//Comprobar que la oferta sale en el listado de ofertas de dicho usuario.
+
     @Test
-    @Order(15)
-    public void PR15(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
-        //Rellenamos el formulario
-        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
-        driver.get("localhost:8090/offer/add");
-        PO_AddOfferView.fillAddForm(driver,"Oferta de prueba","Esto es para una prueba","50");
-        driver.get("localhost:8090/offer/my");
-        List<WebElement> result=PO_View.checkElementBy(driver,"text","Oferta de prueba");
+    @Order(29)
+    public void PR29() {
+        driver.navigate().to("http://localhost:8090/");
 
-        Assertions.assertEquals("Oferta de prueba", result.get(0).getText());
+        String checkText = "Bienvenidos a la pagina principal";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
 
-    }
+        PO_NavView.changeLanguage(driver, "btnEnglish");
 
-//[Prueba16] Ir al formulario de alta de oferta, rellenarla con datos inválidos (precio negativo) y pulsar el
-//botón Enviar. Comprobar que se muestra el mensaje de campo inválido.
-    @Test
-    @Order(16)
-    public void PR16(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
-        //Rellenamos el formulario
-        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
-        driver.get("localhost:8090/offer/add");
-        PO_AddOfferView.fillAddForm(driver,"Oferta de prueba","Esto es para una prueba","-50");
+        checkText = "Welcome to homepage";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
 
-        List<WebElement> result=PO_View.checkElementBy(driver,"text","El precio no puede ser negativo");
+        PO_NavView.changeLanguage(driver, "btnSpanish");
 
-        Assertions.assertEquals("El precio no puede ser negativo", result.get(0).getText());
+        checkText = "Bienvenidos a la pagina principal";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
 
-    }
-    //[Prueba18] Ir a la lista de ofertas, borrar la primera oferta de la lista, comprobar que la lista se actualiza y
-    //que la oferta desaparece.
-    @Test
-    @Order(18)
-    public void PR18() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
-        //Rellenamos el formulario
-        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
-        driver.get("localhost:8090/offer/my");
+        driver.navigate().to("http://localhost:8090/login");
 
-        //List<WebElement> result=PO_View.checkElementBy(driver,"text","El precio no puede ser negativo");
-        PO_PrivateView.clickOptionNoAssert(driver, "/offer/delete/7", "href", "Eliminar");
-        Boolean b = false;
-        try {
-            List<WebElement> result = PO_View.checkElementBy(driver, "href", "/offer/delete/7");
-        } catch (Exception e) {
-            b=true;
-        }
-        Assertions.assertTrue(b);
-    }
-//[Prueba19] Ir a la lista de ofertas, borrar la última oferta de la lista, comprobar que la lista se actualiza y
-//que la oferta desaparece.
-    @Test
-    @Order(19)
-    public void PR19(){
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
-        //Rellenamos el formulario
-        PO_LoginView.fillLoginForm(driver, "test2@gmail.com", "22222");
-        driver.get("localhost:8090/offer/my");
+        checkText = "Correo electronico:";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
 
-        //List<WebElement> result=PO_View.checkElementBy(driver,"text","El precio no puede ser negativo");
-        PO_PrivateView.clickOptionNoAssert(driver,"/offer/delete/7","href","Eliminar");
-        Boolean b = false;
-        try {
-            List<WebElement> result = PO_View.checkElementBy(driver, "href", "/offer/delete/8");
-        } catch (Exception e) {
-            b=true;
-        }
-        Assertions.assertTrue(b);
-    }
-    //[Prueba20] Hacer una búsqueda con el campo vacío y comprobar que se muestra la página que
-    //corresponde con el listado de las ofertas existentes en el sistema
-    @Test
-    @Order(20)
-    public void PR20(){
-        //Vamos al formulario de registro
-        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
-        //Rellenamos el formulario.
-        PO_SignUpView.fillForm(driver, "test20@gmail.com", "Josefo", "Perez", "77777", "77777");
+        PO_NavView.changeLanguage(driver, "btnEnglish");
 
-        PO_LoginView.fillLoginForm(driver, "test20@gmail.com", "77777");
-        driver.get("localhost:8090/offer/listAll");
+        checkText = "Email:";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
 
-        List<WebElement> result =PO_PrivateView.checkElementBy(driver,"id","searchinput");
-        result.get(0).click();
-        result.get(0).sendKeys("123456789pruebatextosinsesentido");
-        result =PO_PrivateView.checkElementBy(driver,"text","Buscar");
-        result.get(0).click();
-        result =PO_PrivateView.checkElementBy(driver,"id","rowtest");
-        Assertions.assertEquals(0,result.size());
-    }
-    //[Prueba21] Hacer una búsqueda escribiendo en el campo un texto que no exista y comprobar que se
-    //muestra la página que corresponde, con la lista de ofertas vacía.
-    @Test
-    @Order(21)
-    public void PR21(){
-        //Vamos al formulario de registro
-        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
-        //Rellenamos el formulario.
-        PO_SignUpView.fillForm(driver, "test20@gmail.com", "Josefo", "Perez", "77777", "77777");
+        PO_NavView.changeLanguage(driver, "btnSpanish");
 
-        PO_LoginView.fillLoginForm(driver, "test20@gmail.com", "77777");
-        driver.get("localhost:8090/offer/listAll");
+        checkText = "Correo electronico:";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
 
-        List<WebElement> result =PO_PrivateView.checkElementBy(driver,"id","searchinput");
-        result.get(0).click();
-        result.get(0).sendKeys("123456789pruebatextosinsesentido");
-        result.get(0).sendKeys(Keys.ENTER);
-        result =PO_PrivateView.checkElementBy(driver,"id","rowtest");
-        Assertions.assertEquals(0,result.size());
-    }
-//[Prueba22] Sobre una búsqueda determinada (a elección del desarrollador), comprar una oferta que deja
-//un saldo positivo en el contador del comprador. Comprobar que el contador se actualiza correctamente
-//en la vista del comprador.
-    @Test
-    @Order(22)
-    public void PR22() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
-        //Rellenamos el formulario
-        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
-        driver.get("http://localhost:8090/offer/buy/8");
-        List<WebElement>result=PO_PrivateView.checkElementBy(driver,"id","actualmoney");
-        Assertions.assertEquals("78.0",result.get(0).getText());
+        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
 
-    }
-    //[Prueba23] Sobre una búsqueda determinada (a elección del desarrollador), comprar una oferta que deja
-    //un saldo 0 en el contador del comprador. Comprobar que el contador se actualiza correctamente en la
-    //vista del comprador.
-    @Test
-    @Order(23)
-    public void PR23() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
-        //Rellenamos el formulario
-        PO_LoginView.fillLoginForm(driver, "test2@gmail.com", "22222");
-        driver.get("http://localhost:8090/offer/buy/9");
-        List<WebElement>result=PO_PrivateView.checkElementBy(driver,"id","actualmoney");
-        Assertions.assertEquals("0.0",result.get(0).getText());
+        driver.navigate().to("http://localhost:8090/user/list");
 
-    }
-    //[Prueba24] Sobre una búsqueda determinada (a elección del desarrollador), intentar comprar una oferta
-    //que esté por encima de saldo disponible del comprador. Y comprobar que se muestra el mensaje de
-    //saldo no suficiente
-    @Test
-    @Order(24)
-    public void PR24() {
-        PO_HomeView.clickOption(driver, "login", "class", "btn btn-dark");
-        //Rellenamos el formulario
-        PO_LoginView.fillLoginForm(driver, "test2@gmail.com", "22222");
-        driver.get("http://localhost:8090/offer/buy/10");
-        List<WebElement>result=PO_PrivateView.checkElementBy(driver,"id","actualmoney");
-        Assertions.assertEquals("100.0",result.get(0).getText());
+        checkText = "Apellidos";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnEnglish");
+
+        checkText = "Surnames";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnSpanish");
+
+        checkText = "Apellidos";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        driver.navigate().to("http://localhost:8090/offer/listAll");
+
+        checkText = "Todas las ofertas";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnEnglish" +
+                "");
+
+        checkText = "All offers";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnSpanish");
+
+        checkText = "Todas las ofertas";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
 
     }
 

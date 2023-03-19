@@ -58,12 +58,4 @@ public class PO_PrivateView extends PO_NavView  {
         Assertions.assertEquals(1, elements.size());
         elements.get(0).click();
     }
-
-    public static void clickOptionByPath(WebDriver driver, String textOption) {
-        //CLickamos en la opción de registro y esperamos a que se cargue el enlace de Registro.
-        List<WebElement> elements = SeleniumUtils.waitLoadElementsBy(driver, "free", textOption,
-                getTimeout());
-        Assertions.assertEquals(1, elements.size());
-        elements.get(0).click();
-    }
 }
