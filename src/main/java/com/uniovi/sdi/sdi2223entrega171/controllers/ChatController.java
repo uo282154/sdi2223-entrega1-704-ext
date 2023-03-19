@@ -8,6 +8,7 @@ import com.uniovi.sdi.sdi2223entrega171.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -74,6 +75,9 @@ public class ChatController {
         Chat chat = chatService.findChatByOfferAndSender(offer, myUser);
         List<Message> messages = new ArrayList<Message>();
         if (chat != null){
+            if(!userDetailsService.isUserInChat(chat.getId(), username, offerId)){
+                throw new AccessDeniedException("No tienes acceso a este recurso");
+            }
             messages = messageService.getMessagesByChat(chat);
         }
         model.addAttribute("chatActual", chat);
@@ -99,9 +103,13 @@ public class ChatController {
         if(chat.getSender() == null){
             chat.setSender(userDetailsService.getActiveUser());
         }
+        chatService.addChat(chat, message);
+        if(!userDetailsService.isUserInChat(chat.getId(), username, offerId)){
+            throw new AccessDeniedException("No tienes acceso a este recurso");
+        }
                                                 //mover al servicio
 
-        chatService.addChat(chat, message);
+
 
         return "redirect:/chat/" + offerId + '/' + myUser.getEmail();
     }

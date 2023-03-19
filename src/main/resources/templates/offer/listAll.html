@@ -15,7 +15,7 @@
     <button type="submit" class="btn btn-default border border-primary"
             th:text="#{offer.search}"></button>
   </form>
-  <p>Las ofertas que hay actualmente en el sistema son:</p>
+  <p th:text="#{offer.actualoffers}"></p>
   <div class="table-responsive">
     <table class="table table-hover" id="tableUsers">
       <thead>
@@ -37,7 +37,8 @@
         <td th:if="${offer.status=='SOLD'}" >Vendido
         </td>
         <td scope="row">
-          <a th:href="@{'/chat/' + ${offer.id} + '/' + ${#authentication.principal.username}}" class="btn btn-primary">Chat with Seller</a>
+          <a th:href="@{'/chat/' + ${offer.id} + '/' + ${#authentication.principal.username}}" class="btn btn-primary"
+            th:text="#{chat.create}"></a>
         </td>
       </tr>
       </tbody>

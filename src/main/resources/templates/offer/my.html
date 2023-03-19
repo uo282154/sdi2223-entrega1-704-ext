@@ -16,7 +16,7 @@
         <button type="submit" class="btn btn-default border border-primary"
                 th:text="Buscar"></button>
     </form>
-    <p>Las ofertas que hay actualmente en el sistema son:</p>
+    <p th:text="#{offer.actualoffers}"></p>
     <div class="table-responsive">
         <table class="table table-hover" id="tableOffers">
             <thead>
@@ -37,11 +37,6 @@
                 <td scope="row" th:text="${offer.price}">2€</td>
                 <td scope="row" th:text="${offer.status}">ACTIVE</td>
                 <td scope="row" th:text="${offer.createAt}">01/01/2023</td>
-                <td>
-                    <button type="button" th:id="${'conversation' + offer.id}" class="btn btn-info">
-                        Iniciar Conversación
-                    </button>
-                </td>
                 <td><a th:href="${'/offer/delete/' + offer.id} "th:text=" #{offer.delete}">eliminar</a>
                 </td>
             </tr>

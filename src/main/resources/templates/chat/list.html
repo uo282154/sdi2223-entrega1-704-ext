@@ -6,9 +6,9 @@
 <nav th:replace="fragments/nav"/>
 
 <div class="container">
-    <h2>Todas las chats</h2>
+    <h2 th:text="#{chat.allchats}"></h2>
 
-    <p>Los chats activos en el sistema son:</p>
+    <p th:text="#{chats.actives}"></p>
     <div class="table-responsive">
         <table class="table table-hover" id="tableChats">
             <thead>

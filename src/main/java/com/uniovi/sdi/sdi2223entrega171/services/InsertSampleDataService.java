@@ -48,6 +48,7 @@ public class InsertSampleDataService {
 
         Offer offer1 = new Offer("Oferta 1", "Oferta para los más entusiastas", 40, user1);
         offer1.setStatus(Offer.STATUS_SOLD);
+        offer1.setBuyer(user2);
         Offer offer2 = new Offer("Oferta 2", "Oferta para los más locos", 50, user2);
         offer2.setStatus(rolesService.getOfferStatus()[0]);
         Offer offer3 = new Offer("Oferta 3", "Oferta tímida", 22, user3);
