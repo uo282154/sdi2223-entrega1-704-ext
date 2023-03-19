@@ -21,9 +21,9 @@ class Sdi2223Entrega171ApplicationTests {
     //static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 //    static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\uni\\tercero\\sdi\\practica 2\\geckodriver-v0.30.0-win64.exe";
 
-    //static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 //    static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
-    static String Geckodriver = "C:\\Users\\jorge\\Desktop\\geckodriver-v0.30.0-win64\\geckodriver.exe";
+    //static String Geckodriver = "C:\\Users\\jorge\\Desktop\\geckodriver-v0.30.0-win64\\geckodriver.exe";
 
     //static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 //    static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -247,142 +247,8 @@ class Sdi2223Entrega171ApplicationTests {
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user12@gmail.com",PO_View.getTimeout());
         Assertions.assertEquals(11, userList2.size());
     }
-//   [Prueba17] Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas los que
-//    existen para este usuario
-    @Test
-    @Order(17)
-    public void PR17() {
-        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
-        PO_SignUpView.fillForm(driver, "pruebaOffer@gmail.com", "Josefo", "Perez", "77777", "77777");
-
-        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
-        elements.get(0).click();
-
-        List<WebElement> elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
-        elements2.get(0).click();
-
-        PO_OfferView.fillOfferForm(driver, "OfertaPrueba", "Esta es una oferta de prueba", "10");
-
-        elements = PO_View.checkElementBy(driver, "free", "//td[contains(text(), 'OfertaPrueba')]");
-        String text = "OfertaPrueba";
-        Assertions.assertEquals(text,elements.get(0).getText());
-    }
-
-    //    [Prueba25] Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
-//    las ofertas que deben aparecer.
-    @Test
-    @Order(25)
-    public void PR25() {
-        driver.navigate().to("http://localhost:8090/login");
-        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
-        PO_SignUpView.fillForm(driver, "email25@gmail.com", "Josefo", "Perez", "11111", "11111");
-
-        // Crear oferta
-        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
-        elements.get(0).click();
-        List<WebElement> elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
-        elements2.get(0).click();
-        PO_OfferView.fillOfferForm(driver, "OfertaPrueba25", "Esta es una oferta de prueba25", "25");
-        // salimos
-        PO_HomeView.clickOption(driver, "logout", "id", "loginbtn");
-
-        // registrar user2
-        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
-        PO_SignUpView.fillForm(driver, "email252@gmail.com", "Josefo", "Perez", "11111", "11111");
-
-        // ver que no tiene compras
-        elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
-        elements.get(0).click();
-        elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/myBoughts')]");
-        elements2.get(0).click();
 
 
-
-        //sacamos la id de
-        elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/listAll')]");
-        elements2.get(0).click();
-
-        List<WebElement> list = SeleniumUtils.waitLoadElementsBy(driver, "class", "offerBotiItem", PO_View.getTimeout());
-        String idOffer = list.get(list.size()-1).getAttribute("id");
-
-        driver.get("http://localhost:8090/offer/buy/"+idOffer);
-
-
-        // ver que tiene compras
-        elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
-        elements.get(0).click();
-        elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/myBoughts')]");
-        elements2.get(0).click();
-
-        SeleniumUtils.textIsPresentOnPage(driver, "OfertaPrueba25");
-    }
-
-    //[Prueba26] Sobre una búsqueda determinada de ofertas (a elección de desarrollador), enviar un mensaje
-    //a una oferta concreta. Se abriría dicha conversación por primera vez. Comprobar que el mensaje aparece
-    //en la conversación
-    @Test
-    @Order(26)
-    public void PR26() {
-        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
-        PO_SignUpView.fillForm(driver, "pruebaChat@gmail.com", "ChatName", "Perez", "77777", "77777");
-
-        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'allOffers')]/a");
-        elements.get(0).click();
-
-        elements = PO_View.checkElementBy(driver, "free", "//td[contains(@id, 'OfertaPruebapruebaOffer@gmail.com')]/a");
-        elements.get(0).click();
-
-        String textSaludo = "Hola!";
-        String persona = "ChatName Perez";
-        PO_ChatView.fillChatForm(driver, textSaludo);
-
-        elements = PO_View.checkElementBy(driver, "class", "mt-0 mb-1");
-        Assertions.assertEquals(persona, elements.get(0).getText());
-
-        elements = PO_View.checkElementBy(driver, "class", "mb-0");
-        Assertions.assertEquals(textSaludo, elements.get(0).getText());
-    }
-    //[Prueba27] Enviar un mensaje a una conversación ya existente accediendo desde el botón/enlace
-    //“Conversación”. Comprobar que el mensaje aparece en la conversación
-    @Test
-    @Order(27)
-    public void PR27() {
-        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
-        PO_LoginView.fillLoginForm(driver, "pruebaChat@gmail.com", "77777");
-
-        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'navChats')]/a");
-        elements.get(0).click();
-        elements = PO_View.checkElementBy(driver, "free", "//td[contains(@id, 'OfertaPruebapruebaOffer@gmail.com')]/a");
-        elements.get(0).click();
-        String textSaludo = "Hola!";
-        String textNuevo = "Que tal!";
-        String persona = "ChatName Perez";
-
-        PO_ChatView.fillChatForm(driver, textNuevo);
-        elements = PO_View.checkElementBy(driver, "class", "mt-0 mb-1");
-        Assertions.assertEquals(persona, elements.get(0).getText());
-
-        elements = PO_View.checkElementBy(driver, "class", "mt-0 mb-1");
-        Assertions.assertEquals(persona, elements.get(1).getText());
-
-        elements = PO_View.checkElementBy(driver, "class", "mb-0");
-        Assertions.assertEquals(textSaludo, elements.get(0).getText());
-
-        Assertions.assertEquals(textNuevo, elements.get(1).getText());
-    }
-//[Prueba28] Mostrar el listado de conversaciones ya abiertas. Comprobar que el listado contiene la
-//cantidad correcta de conversaciones.
-    @Test
-    @Order(28)
-    public void PR28() {
-        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
-        PO_LoginView.fillLoginForm(driver, "pruebaChat@gmail.com", "77777");
-        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'navChats')]/a");
-        elements.get(0).click();
-
-        List<WebElement> chatsList = SeleniumUtils.waitLoadElementsBy(driver, "class", "chatTrItem",PO_View.getTimeout());
-        Assertions.assertEquals(1, chatsList.size());
-    }
 //[Prueba15] Ir al formulario de alta de oferta, rellenarla con datos válidos y pulsar el botón Enviar.
 //Comprobar que la oferta sale en el listado de ofertas de dicho usuario.
     @Test
@@ -415,6 +281,26 @@ class Sdi2223Entrega171ApplicationTests {
 
         Assertions.assertEquals("El precio no puede ser negativo", result.get(0).getText());
 
+    }
+    //   [Prueba17] Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas los que
+//    existen para este usuario
+    @Test
+    @Order(17)
+    public void PR17() {
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        PO_SignUpView.fillForm(driver, "pruebaOffer@gmail.com", "Josefo", "Perez", "77777", "77777");
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
+        elements.get(0).click();
+
+        List<WebElement> elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
+        elements2.get(0).click();
+
+        PO_OfferView.fillOfferForm(driver, "OfertaPrueba", "Esta es una oferta de prueba", "10");
+
+        elements = PO_View.checkElementBy(driver, "free", "//td[contains(text(), 'OfertaPrueba')]");
+        String text = "OfertaPrueba";
+        Assertions.assertEquals(text,elements.get(0).getText());
     }
     //[Prueba18] Ir a la lista de ofertas, borrar la primera oferta de la lista, comprobar que la lista se actualiza y
     //que la oferta desaparece.
@@ -537,6 +423,202 @@ class Sdi2223Entrega171ApplicationTests {
         driver.get("http://localhost:8090/offer/buy/10");
         List<WebElement>result=PO_PrivateView.checkElementBy(driver,"id","actualmoney");
         Assertions.assertEquals("100.0",result.get(0).getText());
+
+    }
+
+    //    [Prueba25] Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
+//    las ofertas que deben aparecer.
+    @Test
+    @Order(25)
+    public void PR25() {
+        driver.navigate().to("http://localhost:8090/login");
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        PO_SignUpView.fillForm(driver, "email25@gmail.com", "Josefo", "Perez", "11111", "11111");
+
+        // Crear oferta
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
+        elements.get(0).click();
+        List<WebElement> elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
+        elements2.get(0).click();
+        PO_OfferView.fillOfferForm(driver, "OfertaPrueba25", "Esta es una oferta de prueba25", "25");
+        // salimos
+        PO_HomeView.clickOption(driver, "logout", "id", "loginbtn");
+
+        // registrar user2
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        PO_SignUpView.fillForm(driver, "email252@gmail.com", "Josefo", "Perez", "11111", "11111");
+
+        // ver que no tiene compras
+        elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
+        elements.get(0).click();
+        elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/myBoughts')]");
+        elements2.get(0).click();
+
+
+
+        //sacamos la id de
+        elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/listAll')]");
+        elements2.get(0).click();
+
+        List<WebElement> list = SeleniumUtils.waitLoadElementsBy(driver, "class", "offerBotiItem", PO_View.getTimeout());
+        String idOffer = list.get(list.size()-1).getAttribute("id");
+
+        driver.get("http://localhost:8090/offer/buy/"+idOffer);
+
+
+        // ver que tiene compras
+        elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
+        elements.get(0).click();
+        elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/myBoughts')]");
+        elements2.get(0).click();
+
+        SeleniumUtils.textIsPresentOnPage(driver, "OfertaPrueba25");
+    }
+
+    //[Prueba26] Sobre una búsqueda determinada de ofertas (a elección de desarrollador), enviar un mensaje
+    //a una oferta concreta. Se abriría dicha conversación por primera vez. Comprobar que el mensaje aparece
+    //en la conversación
+    @Test
+    @Order(26)
+    public void PR26() {
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        PO_SignUpView.fillForm(driver, "pruebaChat@gmail.com", "ChatName", "Perez", "77777", "77777");
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'allOffers')]/a");
+        elements.get(0).click();
+
+        elements = PO_View.checkElementBy(driver, "free", "//td[contains(@id, 'OfertaPruebapruebaOffer@gmail.com')]/a");
+        elements.get(0).click();
+
+        String textSaludo = "Hola!";
+        String persona = "ChatName Perez";
+        PO_ChatView.fillChatForm(driver, textSaludo);
+
+        elements = PO_View.checkElementBy(driver, "class", "mt-0 mb-1");
+        Assertions.assertEquals(persona, elements.get(0).getText());
+
+        elements = PO_View.checkElementBy(driver, "class", "mb-0");
+        Assertions.assertEquals(textSaludo, elements.get(0).getText());
+    }
+    //[Prueba27] Enviar un mensaje a una conversación ya existente accediendo desde el botón/enlace
+    //“Conversación”. Comprobar que el mensaje aparece en la conversación
+    @Test
+    @Order(27)
+    public void PR27() {
+        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
+        PO_LoginView.fillLoginForm(driver, "pruebaChat@gmail.com", "77777");
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'navChats')]/a");
+        elements.get(0).click();
+        elements = PO_View.checkElementBy(driver, "free", "//td[contains(@id, 'OfertaPruebapruebaOffer@gmail.com')]/a");
+        elements.get(0).click();
+        String textSaludo = "Hola!";
+        String textNuevo = "Que tal!";
+        String persona = "ChatName Perez";
+
+        PO_ChatView.fillChatForm(driver, textNuevo);
+        elements = PO_View.checkElementBy(driver, "class", "mt-0 mb-1");
+        Assertions.assertEquals(persona, elements.get(0).getText());
+
+        elements = PO_View.checkElementBy(driver, "class", "mt-0 mb-1");
+        Assertions.assertEquals(persona, elements.get(1).getText());
+
+        elements = PO_View.checkElementBy(driver, "class", "mb-0");
+        Assertions.assertEquals(textSaludo, elements.get(0).getText());
+
+        Assertions.assertEquals(textNuevo, elements.get(1).getText());
+    }
+    //[Prueba28] Mostrar el listado de conversaciones ya abiertas. Comprobar que el listado contiene la
+//cantidad correcta de conversaciones.
+    @Test
+    @Order(28)
+    public void PR28() {
+        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
+        PO_LoginView.fillLoginForm(driver, "pruebaChat@gmail.com", "77777");
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'navChats')]/a");
+        elements.get(0).click();
+
+        List<WebElement> chatsList = SeleniumUtils.waitLoadElementsBy(driver, "class", "chatTrItem",PO_View.getTimeout());
+        Assertions.assertEquals(1, chatsList.size());
+    }
+
+    @Test
+    @Order(29)
+    public void PR29() {
+        driver.navigate().to("http://localhost:8090/");
+
+        String checkText = "Bienvenidos a la pagina principal";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnEnglish");
+
+        checkText = "Welcome to homepage";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnSpanish");
+
+        checkText = "Bienvenidos a la pagina principal";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        driver.navigate().to("http://localhost:8090/login");
+
+        checkText = "Correo electronico:";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnEnglish");
+
+        checkText = "Email:";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnSpanish");
+
+        checkText = "Correo electronico:";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
+
+        driver.navigate().to("http://localhost:8090/user/list");
+
+        checkText = "Apellidos";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnEnglish");
+
+        checkText = "Surnames";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnSpanish");
+
+        checkText = "Apellidos";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        driver.navigate().to("http://localhost:8090/offer/listAll");
+
+        checkText = "Todas las ofertas";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnEnglish" +
+                "");
+
+        checkText = "All offers";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+
+        PO_NavView.changeLanguage(driver, "btnSpanish");
+
+        checkText = "Todas las ofertas";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
 
     }
 
