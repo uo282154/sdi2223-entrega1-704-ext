@@ -176,6 +176,7 @@ class Sdi2223Entrega171ApplicationTests {
 
         PO_PrivateView.clickOption(driver,"1");
         PO_PrivateView.clickOption(driver,"delete");
+
         List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
         Assertions.assertEquals(5, userList2.size());
     }
