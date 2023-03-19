@@ -3,6 +3,7 @@ package com.uniovi.sdi.sdi2223entrega171;
 import com.uniovi.sdi.sdi2223entrega171.handlers.LoginFailureHandler;
 import com.uniovi.sdi.sdi2223entrega171.handlers.LoginSuccessHandler;
 import com.uniovi.sdi.sdi2223entrega171.handlers.LogoutHandler;
+import com.uniovi.sdi.sdi2223entrega171.services.LogService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**", "/images/**", "/script/**", "/", "/signup", "/login/**","/error").permitAll()
                 .antMatchers("/user/list/**").hasRole("ADMIN")
+                .antMatchers("/log/*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
