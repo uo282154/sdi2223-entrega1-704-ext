@@ -18,6 +18,28 @@ public class User {
     private String role;
     private double money;
 
+    public Set<Offer> getBoughtOffers() {
+        return boughtOffers;
+    }
+
+    public void setBoughtOffers(Set<Offer> boughtOffers) {
+        this.boughtOffers = boughtOffers;
+    }
+
+    public Set<Offer> getSoldOffers() {
+        return soldOffers;
+    }
+
+    public void setSoldOffers(Set<Offer> soldOffers) {
+        this.soldOffers = soldOffers;
+    }
+
+    @OneToMany(mappedBy = "buyer",cascade = CascadeType.ALL)
+    private Set<Offer> boughtOffers;
+
+    @OneToMany(mappedBy = "creator",cascade = CascadeType.ALL)
+    private Set<Offer> soldOffers;
+
     public User(String email, String name, String surname) {
         super();
         this.email = email;
@@ -66,4 +88,6 @@ public class User {
     public String getFullName() {
         return this.name + " " + this.surname;
     }
+
+
 }

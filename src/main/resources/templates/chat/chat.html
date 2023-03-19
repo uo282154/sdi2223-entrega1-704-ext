@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<nav th:replace="fragments/nav"/>
+<ul id="chatList" class="list-unstyled" th:if="${not #lists.isEmpty(messagesFromChat)}">
+    <li class="media my-2" th:each="message : ${messagesFromChat}">
+        <div class="media-body">
+            <h5 class="mt-0 mb-1" th:text="${message.sender.getFullName()}">Nombre del remitente</h5>
+            <p th:text="${message.text}" class="mb-0">Mensaje de texto</p>
+            <small th:text="${message.createdAt}" class="text-muted">Tiempo de envío</small>
+        </div>
+    </li>
+</ul>
+<script>
+    setTimeout(function(){
+        location.reload();
+    }, 5000); // recarga la página cada 5 segundos (5000 ms)
+</script>
+<form th:action="@{/chat/{offerId}/{username}/add(offerId=${offerChat.id}, username=${myUserChat.email})}"
+      method="post">
+    <input class="form-control" size="50"
+           type="text" name="message" id="message" required/>
+    <button id="submitBtn" class="btn btn-primary" th:disabled="${#strings.isEmpty(message)}" type="submit" th:text="#{signup.send}"></button>
+</form>
+<script>
+
+    var input = document.getElementById('message');
+    var button = document.getElementById('submitBtn');
+
+    var savedValue = localStorage.getItem('myInputValue');
+    var savedValue2 = localStorage.getItem('myButtonState');
+
+    // Restaurar el valor guardado en el input
+    if (savedValue) {
+        input.value = savedValue;
+    }
+    if (savedValue === 'disabled') {
+        button.disabled = true;
+    } else {
+        button.disabled = false;
+    }
+
+    // Guardar el valor del input en el almacenamiento local cada vez que cambie
+    input.addEventListener('input', function() {
+        localStorage.setItem('myInputValue', input.value);
+    });
+    button.addEventListener('click', function() {
+        if (button.disabled) {
+            localStorage.setItem('myButtonState', 'disabled');
+        } else {
+            localStorage.setItem('myButtonState', 'enabled');
+        }
+    });
+</script>
+<script>
+    const messageInput = document.getElementById('message');
+    const submitBtn = document.getElementById('submitBtn');
+
+    messageInput.addEventListener('input', function() {
+        submitBtn.disabled = messageInput.value.trim() === '';
+    });
+</script>
+</body>
+<footer th:replace="fragments/footer"/>
+</html>
+
