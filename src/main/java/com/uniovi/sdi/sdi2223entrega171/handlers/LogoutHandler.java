@@ -22,7 +22,7 @@ public class LogoutHandler implements LogoutSuccessHandler {
 
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-		logService.logger.info("User disconected");
+		logService.logger.info("User disconected ");
 		logService.addLog(Log.LogItemType.LOGOUT, "User disconected "+authentication.getName());
 		redirectStrategy.sendRedirect(request, response, "/login?logout");
 	}

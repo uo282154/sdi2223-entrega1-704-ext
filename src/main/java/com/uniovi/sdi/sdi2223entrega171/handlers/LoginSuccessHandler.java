@@ -23,8 +23,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-		logService.logger.info("User logged succesfully");
-		logService.addLog(Log.LogItemType.LOGIN_EX, "User logged succesfully"+request.getParameter("username"));
+		logService.logger.info("User logged succesfully ");
+		logService.addLog(Log.LogItemType.LOGIN_EX, "User logged succesfully "+request.getParameter("username"));
 		redirectStrategy.sendRedirect(request, response, "/home");
 	}
 }

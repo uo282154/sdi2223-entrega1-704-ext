@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static com.uniovi.sdi.sdi2223entrega171.pageobjects.PO_View.getTimeout;
+
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class Sdi2223Entrega171ApplicationTests {
@@ -146,7 +148,7 @@ class Sdi2223Entrega171ApplicationTests {
     @Test
     @Order(10)
     public void PR10() {
-        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "Desconectar",PO_View.getTimeout());
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "Desconectar", getTimeout());
     }
 
     @Test
@@ -158,7 +160,7 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id","listarUsers");
         Assertions.assertEquals(checkText, result.get(0).getText());
         PO_NavView.clickOption(driver,"/user/list","id","listarUsers");
-        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
         Assertions.assertEquals(6, userList.size());
     }
 
@@ -171,13 +173,13 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id","listarUsers");
         Assertions.assertEquals(checkText, result.get(0).getText());
         PO_NavView.clickOption(driver,"/user/list","id","listarUsers");
-        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
         Assertions.assertEquals(6, userList.size());
 
         PO_PrivateView.clickOption(driver,"1");
         PO_PrivateView.clickOption(driver,"delete");
 
-        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
         Assertions.assertEquals(5, userList2.size());
     }
 
@@ -190,14 +192,14 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id","listarUsers");
         Assertions.assertEquals(checkText, result.get(0).getText());
         PO_NavView.clickOption(driver,"/user/list","id","listarUsers");
-        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
         Assertions.assertEquals(5, userList.size());
 
         List<WebElement> result2 = PO_View.checkElementBy(driver, "class", "cb-user");
         String id = result2.get(result2.size() - 1).getAttribute("id");
         PO_PrivateView.clickOption(driver,id);
         PO_PrivateView.clickOption(driver,"delete");
-        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
         Assertions.assertEquals(4, userList2.size());
     }
 
@@ -210,7 +212,7 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id","listarUsers");
         Assertions.assertEquals(checkText, result.get(0).getText());
         PO_NavView.clickOption(driver,"/user/list","id","listarUsers");
-        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
         Assertions.assertEquals(4, userList.size());
 
         List<WebElement> result2 = PO_View.checkElementBy(driver, "class", "cb-user");
@@ -219,7 +221,162 @@ class Sdi2223Entrega171ApplicationTests {
             PO_PrivateView.clickOption(driver, id);
         }
         PO_PrivateView.clickOption(driver,"delete");
-        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
         Assertions.assertEquals(1, userList2.size());
     }
+
+    //    [Prueba30] Intentar acceder sin estar autenticado a la opción de listado de usuarios. Se deberá volver al
+//    formulario de login.
+    @Test
+    @Order(30)
+    public void PR30() {
+        driver.navigate().to("http://localhost:8090/user/list");
+
+        String checkText = "Identificate";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
+    @Test
+    @Order(31)
+    public void PR31() {
+        // en el pdf este test no es de este proyecto
+        Assertions.assertTrue(true);
+    }
+
+
+    //    [Prueba32] Estando autenticado como usuario estándar intentar acceder a una opción disponible solo
+//    para usuarios administradores (Añadir menú de auditoria (visualizar logs)).
+    @Test
+    @Order(32)
+    public void PR32() {
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        PO_SignUpView.fillForm(driver, "email32@gmail.com", "Josefo", "Perez", "11111", "11111");
+
+        driver.navigate().to("http://localhost:8090/login");
+//        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "email32@gmail.com", "11111");
+
+        driver.navigate().to("http://localhost:8090/log/list");
+
+        // No abre la seccion
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "Registro de actividad", getTimeout());
+    }
+
+    //    [Prueba33] Estando autenticado como usuario administrador visualizar todos los logs generados en una
+//    serie de interacciones. Esta prueba deberá generar al menos dos interacciones de cada tipo y comprobar
+//    que el listado incluye los logs correspondientes.
+//    @Test
+//    @Order(33)
+//    public void PR33() {
+//        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+//        PO_SignUpView.fillForm(driver, "aaaaa@gmail.com", "aaaaa", "aaaaa aaaaa", "123456", "123456");
+//        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+//
+//        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+//        PO_SignUpView.fillForm(driver, "bbbbb@gmail.com", "bbbbb", "bbbbb bbbbb", "123456", "123456");
+//
+//
+//        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "patata");
+//        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "patata");
+//
+//        PO_LoginView.fillLoginForm(driver, "user01@gmail.com", "user01");
+//        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+//
+//        PO_LoginView.fillLoginForm(driver, "user02@gmail.com", "user02");
+//        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+//
+//        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
+//        PO_HomeView.clickOption(driver, "/admin/logs", "class", "btn btn-primary");
+//
+//        //Abre la opcion x del menu
+//        List<WebElement> logButton = SeleniumUtils.waitLoadElementsBy(driver, "id", "logsDropdown",
+//                getTimeout());
+//        logButton.get(0).click();
+//        //Esperamos a que aparezca el menú de opciones.
+//        SeleniumUtils.waitLoadElementsBy(driver, "id", "logDropdownMenuButton", getTimeout());
+//        //CLickamos la opción Inglés partiendo de la opción Español
+//        List<WebElement> opt = SeleniumUtils.waitLoadElementsBy(driver, "id", "showLogsList",
+//                getTimeout());
+//        opt.get(0).click();
+//
+//        List<WebElement> logList = SeleniumUtils.waitLoadElementsBy(driver, "class", "logList", getTimeout());
+//        Assertions.assertTrue(logList.size() >10);
+//
+//    }
+
+//    [Prueba33] Estando autenticado como usuario administrador visualizar todos los logs generados en una
+//    serie de interacciones. Esta prueba deberá generar al menos dos interacciones de cada tipo y comprobar
+//    que el listado incluye los logs correspondientes.
+    @Test
+    @Order(33)
+    public void PR33() {
+//        //+1 alta
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        PO_SignUpView.fillForm(driver, "aaaaa@gmail.com", "aaaaa", "aaaaa aaaaa", "123456", "123456");
+
+        //+1 log-ex
+        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
+        PO_LoginView.fillLoginForm(driver, "aaaaa@gmail.com", "123456");
+
+        // +1 Logout
+        driver.navigate().to("http://localhost:8090/login?logout");
+
+        // +1 alta
+        driver.navigate().to("http://localhost:8090/signup");
+        PO_SignUpView.fillForm(driver, "bbbbb@gmail.com", "bbbbb", "bbbbb bbbbb", "123456", "123456");
+
+        driver.navigate().to("http://localhost:8090/login?logout");
+        driver.navigate().to("http://localhost:8090/login");
+
+        //+1 log-ex
+        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
+        PO_LoginView.fillLoginForm(driver, "bbbbb@gmail.com", "123456");
+
+        // +1 Logout
+        driver.navigate().to("http://localhost:8090/login?logout");
+
+//        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
+        //2 log-err
+        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "wrongPass");
+        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "wrongPass");
+
+
+//        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
+//        //+1 log-ex
+//        PO_LoginView.fillLoginForm(driver, "aaaaa@gmail.com", "123456");
+//        PO_HomeView.clickOption(driver, "/logout", "id", "logoutbtn");
+//        PO_HomeView.clickOption(driver, "/logout", "id", "logout");
+//        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
+        PO_HomeView.clickOption(driver, "/admin/logs", "class", "btn btn-primary");
+
+        PO_NavView.clickOptionOfDropDown(driver,"id", "logsDropdown", "showLogsList");
+
+        List<WebElement> logList = SeleniumUtils.waitLoadElementsBy(driver, "class", "logList", getTimeout());
+        Assertions.assertTrue(logList.size() >10);
+    }
+
+    //    [Prueba34] Estando autenticado como usuario administrador, ir a visualización de logs, pulsar el
+//    botón/enlace borrar logs y comprobar que se eliminan los logs de la base de datos.
+    @Test
+    @Order(34)
+    public void PR34() {
+
+        // +1 LOG-EX
+        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
+        PO_LoginView.fillLoginForm(driver, "admin@gmail.com", "admin");
+
+        //Borramos los logs
+        PO_NavView.clickOptionOfDropDown(driver,"id", "logsDropdown", "deleteAllLogsBtn");
+
+        // los vemos
+        PO_NavView.clickOptionOfDropDown(driver,"id", "logsDropdown", "showLogsList");
+
+        // no va a estar reflejado el LOG_EX del admin
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "LOG_EX", getTimeout());
+    }
+
 }
+
