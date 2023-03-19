@@ -21,10 +21,10 @@
             </thead>
             <tbody>
             <div th:if="${not #lists.isEmpty(chatsList)}">
-            <tr th:each="chat : ${chatsList}">
+            <tr th:each="chat : ${chatsList}" class="chatTrItem">
                 <td scope="row" th:text="${chat.offer.title}">Oferta 1</td>
                 <td scope="row" th:text="${chat.receiver.getFullName()}">Paco Gonzalez</td>
-                <td scope="row">
+                <td th:id="${chat.offer.title} + ${chat.offer.creator.email}" scope="row">
                     <a th:href="@{'/chat/' + ${chat.offer.id} + '/' + ${chat.sender.email}}" class="btn btn-primary"><span th:text="#{chat.enter}"></span></a>
                 </td>
             </tr>

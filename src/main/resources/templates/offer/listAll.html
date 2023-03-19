@@ -36,7 +36,7 @@
         </td>
         <td th:if="${offer.status=='SOLD'}" >Vendido
         </td>
-        <td scope="row">
+        <td th:id="${offer.title} + ${offer.creator.email}" scope="row">
           <a th:href="@{'/chat/' + ${offer.id} + '/' + ${#authentication.principal.username}}" class="btn btn-primary"
             th:text="#{chat.create}"></a>
         </td>
