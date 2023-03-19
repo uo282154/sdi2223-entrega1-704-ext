@@ -12,17 +12,20 @@ public class Message {
 
     private String text;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Chat chat;
 
     private LocalDateTime createdAt;
 
+    @OneToOne
+    private User sender;
 
-    public Message(Long id, String text, LocalDateTime createdAt, Chat chat) {
-        this.id = id;
+
+    public Message(String text, LocalDateTime createdAt, Chat chat, User sender) {
         this.text = text;
         this.createdAt = createdAt;
         this.chat = chat;
+        this.sender = sender;
     }
 
     public Message() {
@@ -59,5 +62,13 @@ public class Message {
 
     public void setChat(Chat chat) {
         this.chat = chat;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 }

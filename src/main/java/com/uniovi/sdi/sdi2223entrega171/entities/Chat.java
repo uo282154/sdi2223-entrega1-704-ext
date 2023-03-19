@@ -2,6 +2,7 @@ package com.uniovi.sdi.sdi2223entrega171.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,8 +13,11 @@ public class Chat {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(mappedBy = "chat", cascade=CascadeType.ALL)
     private List<Message> messages;
+
+    @ManyToOne
+    private Offer offer;
 
     @OneToOne
     private User sender;
@@ -21,11 +25,11 @@ public class Chat {
     @OneToOne
     private User receiver;
 
-    public Chat(Long id, List<Message> messages, User sender, User receiver) {
-        this.id = id;
-        this.messages = messages;
+    public Chat(User sender, User receiver, Offer offer) {
         this.sender = sender;
         this.receiver = receiver;
+        this.offer = offer;
+        this.messages = new ArrayList<Message>();
     }
 
     public Chat() {}
@@ -46,6 +50,10 @@ public class Chat {
         this.messages = messages;
     }
 
+    public void addMessage(Message message){
+        this.messages.add(message);
+    }
+
     public User getSender() {
         return sender;
     }
@@ -60,6 +68,14 @@ public class Chat {
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 }
 
