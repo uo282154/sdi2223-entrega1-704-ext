@@ -20,9 +20,11 @@ class Sdi2223Entrega171ApplicationTests {
 
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
+    //static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 //    static String Geckodriver = "D:\\Users\\Abel\\OneDrive\\Asignaturas\\Asignaturas Tercer Año\\Segundo Semestre\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
     static String Geckodriver = "C:\\Users\\jorge\\Desktop\\geckodriver-v0.30.0-win64\\geckodriver.exe";
 
+    static String Geckodriver = "C:\\Users\\garci\\Desktop\\Uniovi\\Cuarto\\Segundo Semestre\\Sistemas Distribuidos e Internet\\Laboratorio\\Clase 5\\sesion06\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
@@ -234,6 +236,87 @@ class Sdi2223Entrega171ApplicationTests {
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user13@gmail.com",PO_View.getTimeout());
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user12@gmail.com",PO_View.getTimeout());
         Assertions.assertEquals(11, userList2.size());
+    }
+
+    @Test
+    @Order(17)
+    public void PR17() {
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        PO_SignUpView.fillForm(driver, "pruebaOffer@gmail.com", "Josefo", "Perez", "77777", "77777");
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'myOffers')]/a");
+        elements.get(0).click();
+
+        List<WebElement> elements2 = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
+        elements2.get(0).click();
+
+        PO_OfferView.fillOfferForm(driver, "OfertaPrueba", "Esta es una oferta de prueba", "10");
+
+        elements = PO_View.checkElementBy(driver, "free", "//td[contains(text(), 'OfertaPrueba')]");
+        String text = "OfertaPrueba";
+        Assertions.assertEquals(text,elements.get(0).getText());
+    }
+
+    @Test
+    @Order(26)
+    public void PR26() {
+        PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
+        PO_SignUpView.fillForm(driver, "pruebaChat@gmail.com", "ChatName", "Perez", "77777", "77777");
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'allOffers')]/a");
+        elements.get(0).click();
+
+        elements = PO_View.checkElementBy(driver, "free", "//td[contains(@id, 'OfertaPruebapruebaOffer@gmail.com')]/a");
+        elements.get(0).click();
+
+        String textSaludo = "Hola!";
+        String persona = "ChatName Perez";
+        PO_ChatView.fillChatForm(driver, textSaludo);
+
+        elements = PO_View.checkElementBy(driver, "class", "mt-0 mb-1");
+        Assertions.assertEquals(persona, elements.get(0).getText());
+
+        elements = PO_View.checkElementBy(driver, "class", "mb-0");
+        Assertions.assertEquals(textSaludo, elements.get(0).getText());
+    }
+
+    @Test
+    @Order(27)
+    public void PR27() {
+        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
+        PO_LoginView.fillLoginForm(driver, "pruebaChat@gmail.com", "77777");
+
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'navChats')]/a");
+        elements.get(0).click();
+        elements = PO_View.checkElementBy(driver, "free", "//td[contains(@id, 'OfertaPruebapruebaOffer@gmail.com')]/a");
+        elements.get(0).click();
+        String textSaludo = "Hola!";
+        String textNuevo = "Que tal!";
+        String persona = "ChatName Perez";
+
+        PO_ChatView.fillChatForm(driver, textNuevo);
+        elements = PO_View.checkElementBy(driver, "class", "mt-0 mb-1");
+        Assertions.assertEquals(persona, elements.get(0).getText());
+
+        elements = PO_View.checkElementBy(driver, "class", "mt-0 mb-1");
+        Assertions.assertEquals(persona, elements.get(1).getText());
+
+        elements = PO_View.checkElementBy(driver, "class", "mb-0");
+        Assertions.assertEquals(textSaludo, elements.get(0).getText());
+
+        Assertions.assertEquals(textNuevo, elements.get(1).getText());
+    }
+
+    @Test
+    @Order(28)
+    public void PR28() {
+        PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
+        PO_LoginView.fillLoginForm(driver, "pruebaChat@gmail.com", "77777");
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "//li[contains(@id, 'navChats')]/a");
+        elements.get(0).click();
+
+        List<WebElement> chatsList = SeleniumUtils.waitLoadElementsBy(driver, "class", "chatTrItem",PO_View.getTimeout());
+        Assertions.assertEquals(1, chatsList.size());
     }
 
 
