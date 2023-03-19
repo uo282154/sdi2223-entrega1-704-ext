@@ -6,11 +6,11 @@
 <nav th:replace="fragments/nav"/>
 
 <div class="container">
-  <h2>Todas las ofertas</h2>
+  <h2 th:text="#{offer.all.title}">Todas las ofertas</h2>
   <form class="form-inline mt-2 mb-2" action="/offer/listAll">
     <div class="form-group">
-      <input name="searchText" type="text" class="form-control" size="50"
-             placeholder="Titulo de la oferta">
+      <input name="searchText"  id ="searchinput" type="text" class="form-control" size="50"
+             th:placeholder="#{offer.search.ph}">
     </div>
     <button type="submit" class="btn btn-default border border-primary"
             th:text="#{offer.search}"></button>
@@ -19,7 +19,7 @@
   <div class="table-responsive">
     <table class="table table-hover" id="tableUsers">
       <thead>
-      <tr>
+      <tr id="rowtest">
         <th scope="col"><span th:text="#{offer.title}"></span></th>
         <th scope="col"><span th:text="#{offer.description}"></span></th>
         <th scope="col"><span th:text="#{offer.price}"></span></th>
@@ -32,9 +32,9 @@
         <td scope="row" th:text="${offer.title}">Oferta 1</td>
         <td scope="row" th:text="${offer.description}">Oferta 2</td>
         <td scope="row" th:text="${offer.price}">2€</td>
-        <td th:if="${offer.status=='ACTIVE'}" ><a class="offerBotiItem" th:id="${offer.id}" th:href="${'/offer/buy/' + offer.id} ">Comprar</a>
+        <td th:if="${offer.status=='ACTIVE'}" ><a class="offerBotiItem" th:id="${offer.id}" th:href="${'/offer/buy/' + offer.id} " th:text="#{offer.buy}">Comprar</a>
         </td>
-        <td th:if="${offer.status=='SOLD'}" >Vendido
+        <td th:if="${offer.status=='SOLD'}" th:text="#{offer.sold}" >Vendido
         </td>
         <td th:id="${offer.title} + ${offer.creator.email}" scope="row">
           <a th:href="@{'/chat/' + ${offer.id} + '/' + ${#authentication.principal.username}}" class="btn btn-primary"
