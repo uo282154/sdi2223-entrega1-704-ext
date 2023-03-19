@@ -44,6 +44,7 @@ public class UsersController {
         }
         user.setRole(rolesService.getRoles()[0]);
         usersService.addUser(user);
+        securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 
         logger.info("New user signed up with email " + user.getEmail());
         String description = "New user signed up with email=" + user.getEmail() + "&name=" + user.getName() + "lastName=" +

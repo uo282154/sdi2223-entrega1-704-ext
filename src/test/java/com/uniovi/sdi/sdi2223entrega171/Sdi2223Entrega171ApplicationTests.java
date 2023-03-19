@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.uniovi.sdi.sdi2223entrega171.pageobjects.PO_View.getTimeout;
@@ -57,9 +58,10 @@ class Sdi2223Entrega171ApplicationTests {
     @Order(1)
     public void PR01() {
         PO_HomeView.clickOption(driver, "signup", "id", "signupbtn");
-        PO_SignUpView.fillForm(driver, "email@gmail.com", "Josefo", "Perez", "77777", "77777");
-        String checkText = "Identificate";
-        List<WebElement> result = PO_View.checkElementBy(driver, "id", "loginbtn");
+        PO_SignUpView.fillForm(driver, "user15@gmail.com", "user15", "user15", "user15", "user15");
+        String checkText = "Mis ofertas";
+        List<WebElement> result = PO_View.checkElementBy(driver, "id", "offerDropdown");
+        Assertions.assertEquals("offerDropdown", result.get(0).getAttribute("id"));
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
@@ -107,7 +109,7 @@ class Sdi2223Entrega171ApplicationTests {
     @Order(6)
     public void PR06() {
         PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
-        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
+        PO_LoginView.fillLoginForm(driver, "user01@gmail.com", "user01");
         List<WebElement> result = PO_View.checkElementBy(driver, "id", "offerDropdown");
         Assertions.assertEquals("offerDropdown", result.get(0).getAttribute("id"));
     }
@@ -126,7 +128,7 @@ class Sdi2223Entrega171ApplicationTests {
     @Order(8)
     public void PR08() {
         PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
-        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "contrasnaNoValida");
+        PO_LoginView.fillLoginForm(driver, "user01@gmail.com", "contraseñaNoValida");
         String checkText = "Error al introducir las credenciales";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
@@ -136,12 +138,12 @@ class Sdi2223Entrega171ApplicationTests {
     @Order(9)
     public void PR09() {
         PO_HomeView.clickOption(driver, "login", "id", "loginbtn");
-        PO_LoginView.fillLoginForm(driver, "test1@gmail.com", "11111");
+        PO_LoginView.fillLoginForm(driver, "user01@gmail.com", "user01");
         List<WebElement> result = PO_View.checkElementBy(driver, "id", "offerDropdown");
         Assertions.assertEquals("offerDropdown", result.get(0).getAttribute("id"));
         PO_HomeView.clickOption(driver, "logout", "id", "loginbtn");
         String checkText2 = "Identificate";
-        List<WebElement> result2 = PO_View.checkElementBy(driver, "id", "loginbtn");
+        List<WebElement> result2 = PO_View.checkElementBy(driver, "id", "loginText");
         Assertions.assertEquals(checkText2, result2.get(0).getText());
     }
 
@@ -160,8 +162,8 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id","listarUsers");
         Assertions.assertEquals(checkText, result.get(0).getText());
         PO_NavView.clickOption(driver,"/user/list","id","listarUsers");
-        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
-        Assertions.assertEquals(6, userList.size());
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        Assertions.assertEquals(16, userList.size());
     }
 
     @Test
@@ -173,14 +175,14 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id","listarUsers");
         Assertions.assertEquals(checkText, result.get(0).getText());
         PO_NavView.clickOption(driver,"/user/list","id","listarUsers");
-        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
-        Assertions.assertEquals(6, userList.size());
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        Assertions.assertEquals(16, userList.size());
 
-        PO_PrivateView.clickOption(driver,"1");
+        PO_PrivateView.clickOption(driver,"user01");
         PO_PrivateView.clickOption(driver,"delete");
-
-        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
-        Assertions.assertEquals(5, userList2.size());
+        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user01@gmail.com",PO_View.getTimeout());
+        Assertions.assertEquals(15, userList2.size());
     }
 
     @Test
@@ -192,15 +194,16 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id","listarUsers");
         Assertions.assertEquals(checkText, result.get(0).getText());
         PO_NavView.clickOption(driver,"/user/list","id","listarUsers");
-        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
-        Assertions.assertEquals(5, userList.size());
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        Assertions.assertEquals(15, userList.size());
 
         List<WebElement> result2 = PO_View.checkElementBy(driver, "class", "cb-user");
         String id = result2.get(result2.size() - 1).getAttribute("id");
         PO_PrivateView.clickOption(driver,id);
         PO_PrivateView.clickOption(driver,"delete");
-        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
-        Assertions.assertEquals(4, userList2.size());
+        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user15@gmail.com",PO_View.getTimeout());
+        Assertions.assertEquals(14, userList2.size());
     }
 
     @Test
@@ -212,17 +215,25 @@ class Sdi2223Entrega171ApplicationTests {
         List<WebElement> result = PO_View.checkElementBy(driver, "id","listarUsers");
         Assertions.assertEquals(checkText, result.get(0).getText());
         PO_NavView.clickOption(driver,"/user/list","id","listarUsers");
-        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
-        Assertions.assertEquals(4, userList.size());
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        Assertions.assertEquals(14, userList.size());
+        ArrayList<String> deletedIds = new ArrayList<String>();
 
         List<WebElement> result2 = PO_View.checkElementBy(driver, "class", "cb-user");
-        for(int i = 0; i < result2.size(); i++) {
+        for(int i = result2.size() - 3; i < result2.size() ; i++) {
             String id = result2.get(i).getAttribute("id");
+            deletedIds.add(id);
             PO_PrivateView.clickOption(driver, id);
         }
         PO_PrivateView.clickOption(driver,"delete");
-        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem", getTimeout());
-        Assertions.assertEquals(1, userList2.size());
+        List<WebElement> userList2 = SeleniumUtils.waitLoadElementsBy(driver, "class", "userTrItem",PO_View.getTimeout());
+        for(String id : deletedIds) {
+            SeleniumUtils.waitTextIsNotPresentOnPage(driver, id,PO_View.getTimeout());
+        }
+
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user13@gmail.com",PO_View.getTimeout());
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "user12@gmail.com",PO_View.getTimeout());
+        Assertions.assertEquals(11, userList2.size());
     }
 
     //    [Prueba30] Intentar acceder sin estar autenticado a la opción de listado de usuarios. Se deberá volver al
