@@ -6,6 +6,7 @@ import com.uniovi.sdi.sdi2223entrega171.entities.User;
 import com.uniovi.sdi.sdi2223entrega171.repositories.ChatRepository;
 import com.uniovi.sdi.sdi2223entrega171.repositories.OfferRepository;
 import com.uniovi.sdi.sdi2223entrega171.repositories.UsersRepository;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -54,8 +55,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public boolean isUserInChat(Long chatId, String username, Long offerId) {
         Chat chat = chatRepository.findById(chatId).get();
         Offer offer = offerRepository.findById(offerId).get();
-        return chat != null && (getActiveUser().getEmail().equals(username)
-            || offer.getCreator().getEmail().equals(getActiveUser().getEmail()) );
+        String emailCreator = offer.getCreator().getEmail();
+        String myEmail = getActiveUser().getEmail();
+        return chat != null && ((myEmail.equals(username)
+            || emailCreator.equals(myEmail))
+            && !(emailCreator.equals(username) && myEmail.equals(username)));
     }
 
 }

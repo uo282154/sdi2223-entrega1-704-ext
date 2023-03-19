@@ -1,5 +1,6 @@
 package com.uniovi.sdi.sdi2223entrega171.services;
 
+import com.uniovi.sdi.sdi2223entrega171.entities.Log;
 import com.uniovi.sdi.sdi2223entrega171.entities.Offer;
 import com.uniovi.sdi.sdi2223entrega171.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class InsertSampleDataService {
 
     @Autowired
     private  OffersService offersService;
+
+    @Autowired
+    private  LogService logService;
 
     @PostConstruct
     public void init() {
@@ -88,6 +92,8 @@ public class InsertSampleDataService {
 
         Offer offer1 = new Offer("Oferta 1", "Oferta para los más entusiastas", 40, user1);
         offer1.setStatus(Offer.STATUS_SOLD);
+        Offer offer4_a = new Offer("Ofertaza", "Ofertaza increible", 100, user1);
+        offer1.setStatus(Offer.STATUS_ACTIVE);
         offer1.setBuyer(user2);
         Offer offer2 = new Offer("Oferta 2", "Oferta para los más locos", 50, user2);
         offer2.setStatus(rolesService.getOfferStatus()[0]);
@@ -95,10 +101,18 @@ public class InsertSampleDataService {
         offer3.setStatus(rolesService.getOfferStatus()[0]);
         //Offer offer4 = new Offer("Oferta 4", "Ofertón, sin más", 10);
         //offer4.setStatus(rolesService.getOfferStatus()[0]);
+        Offer offer5_a = new Offer("Oferta 5a", "Oferta cinco a", 150, user3);
+        offer3.setStatus(rolesService.getOfferStatus()[0]);
 
         offersService.addOffer(offer1);
         offersService.addOffer(offer2);
         offersService.addOffer(offer3);
+
+        logService.addLog(Log.LogItemType.PET, "Log n1");
+        logService.addLog(Log.LogItemType.LOGIN_ERR, "Log n2");
+        logService.addLog(Log.LogItemType.LOGOUT, "Log n3");
+        offersService.addOffer(offer4_a);
+        offersService.addOffer(offer5_a);
     }
 
 }

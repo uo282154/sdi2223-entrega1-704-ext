@@ -10,8 +10,6 @@
             <p th:text="${message.text}" class="mb-0">Mensaje de texto</p>
             <small th:text="${message.createdAt}" class="text-muted">Tiempo de envío</small>
         </div>
-        <div id="oculto1" hidden th:text="${chatActual.offer.id}"></div>
-        <div id="oculto2" hidden th:text="${chatActual.sender.email}"></div>
     </li>
 </ul>
 <script>
@@ -25,6 +23,36 @@
            type="text" name="message" id="message" required/>
     <button id="submitBtn" class="btn btn-primary" th:disabled="${#strings.isEmpty(message)}" type="submit" th:text="#{signup.send}"></button>
 </form>
+<script>
+
+    var input = document.getElementById('message');
+    var button = document.getElementById('submitBtn');
+
+    var savedValue = localStorage.getItem('myInputValue');
+    var savedValue2 = localStorage.getItem('myButtonState');
+
+    // Restaurar el valor guardado en el input
+    if (savedValue) {
+        input.value = savedValue;
+    }
+    if (savedValue === 'disabled') {
+        button.disabled = true;
+    } else {
+        button.disabled = false;
+    }
+
+    // Guardar el valor del input en el almacenamiento local cada vez que cambie
+    input.addEventListener('input', function() {
+        localStorage.setItem('myInputValue', input.value);
+    });
+    button.addEventListener('click', function() {
+        if (button.disabled) {
+            localStorage.setItem('myButtonState', 'disabled');
+        } else {
+            localStorage.setItem('myButtonState', 'enabled');
+        }
+    });
+</script>
 <script>
     const messageInput = document.getElementById('message');
     const submitBtn = document.getElementById('submitBtn');

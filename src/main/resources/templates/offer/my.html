@@ -37,7 +37,7 @@
                 <td scope="row" th:text="${offer.price}">2€</td>
                 <td scope="row" th:text="${offer.status}">ACTIVE</td>
                 <td scope="row" th:text="${offer.createAt}">01/01/2023</td>
-                <td><a th:href="${'/offer/delete/' + offer.id} "th:text=" #{offer.delete}">eliminar</a>
+                <td><a th:href="${'/offer/delete/' + offer.id} "th:text=" #{offer.delete}" id="eliminar+offer.id">eliminar</a>
                 </td>
             </tr>
             </tbody>
