@@ -28,7 +28,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="offer : ${offersList}" >
+      <tr th:each="offer : ${offersList}" th:id="rowtest">
         <td scope="row" th:text="${offer.title}">Oferta 1</td>
         <td scope="row" th:text="${offer.description}">Oferta 2</td>
         <td scope="row" th:text="${offer.price}">2€</td>
