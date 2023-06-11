@@ -374,12 +374,9 @@ class Sdi2223Entrega171ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "user03@gmail.com", "user03");
         driver.get("localhost:8090/offer/listAll");
 
-        List<WebElement> result =PO_PrivateView.checkElementBy(driver,"id","searchinput");
-        result.get(0).click();
-        result.get(0).sendKeys("123456789pruebatextosinsesentido");
-        result.get(0).sendKeys(Keys.ENTER);
-        result =PO_PrivateView.checkElementBy(driver,"id","rowtest");
-        Assertions.assertEquals(1,result.size());//Solo se espera uno que es el de los nombres de columna
+        driver.get("http://localhost:8090/offer/listAll?searchText=123456789pruebatextosinsesentido");
+        SeleniumUtils.textIsNotPresentOnPage(driver,"Vendido");
+        SeleniumUtils.textIsNotPresentOnPage(driver,"Comprar");
     }
 //[Prueba22] Sobre una búsqueda determinada (a elección del desarrollador), comprar una oferta que deja
 //un saldo positivo en el contador del comprador. Comprobar que el contador se actualiza correctamente
