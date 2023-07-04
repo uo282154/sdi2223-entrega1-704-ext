@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class OfferController {
@@ -174,5 +176,46 @@ public class OfferController {
         model.addAttribute("user", userDetailsService.getActiveUser());
         return "offer/myBoughts";
     }
+
+    @RequestMapping("offer/listFavs")
+    public String getListFav(Model model){
+        User user=userDetailsService.getActiveUser();
+        model.addAttribute("offersList", user.getFavs());
+        model.addAttribute("user", userDetailsService.getActiveUser());
+        return "offer/listFavs";
+    }
+
+    @RequestMapping("offers/addFav/{id}")
+    public String getAddFav(Model model,@PathVariable Long id){
+
+        User user=userDetailsService.getActiveUser();
+        Offer o=offersService.getOfferById(id);
+        if(!o.getCreator().getEmail().equals(user.getEmail()) && o.getStatus().equals(Offer.STATUS_ACTIVE) ){
+            Set<Offer> favs=user.getFavs();
+            favs.add(o);
+            user.setFavs(favs);
+            usersService.updateUser(user);
+            model.addAttribute("offersList", user.getFavs());
+            model.addAttribute("user", userDetailsService.getActiveUser());
+            return "offer/listFavs";
+        }
+        model.addAttribute("user", userDetailsService.getActiveUser());
+        return "redirect:/offer/listAll";
+    }
+
+    @RequestMapping("offers/deleteFav/{id}")
+    public String getDeleteFav(Model model,@PathVariable Long id){
+
+        User user=userDetailsService.getActiveUser();
+        Set<Offer> favs=user.getFavs();
+        favs.remove(offersService.getOfferById(id));
+        user.setFavs(favs);
+        usersService.updateUser(user);
+
+        model.addAttribute("offersList", user.getFavs());
+        model.addAttribute("user", userDetailsService.getActiveUser());
+        return "offer/listFavs";
+    }
+
 
 }

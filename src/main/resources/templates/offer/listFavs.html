@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<!-- Barra de Navegación superior -->
+<nav th:replace="fragments/nav"/>
+
+<div class="container">
+  <h2 th:text="#{offer.all.title}">Ofertas favoritas</h2>
+  <form class="form-inline mt-2 mb-2" action="/offer/listAll">
+
+  <p th:text="#{offer.actualoffers}"></p>
+  <div class="table-responsive">
+    <table class="table table-hover" id="tableUsers">
+      <thead>
+      <tr >
+        <th scope="col"><span th:text="#{offer.title}"></span></th>
+        <th scope="col"><span th:text="#{offer.description}"></span></th>
+        <th scope="col"><span th:text="#{offer.price}"></span></th>
+        <th scope="col"></th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="offer : ${offersList}" th:id="rowtest">
+        <td scope="row" th:text="${offer.title}">Oferta 1</td>
+        <td scope="row" th:text="${offer.description}">Oferta 2</td>
+        <td scope="row" th:text="${offer.price}">2€</td>
+        <td th:if="${offer.status=='ACTIVE'}" ><a  th:href="${'/offers/deleteFav/'+offer.id}" >Eliminar favorita</a>
+
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.uniovi.sdi.sdi2223entrega171.services;
 
+import com.uniovi.sdi.sdi2223entrega171.entities.Offer;
 import com.uniovi.sdi.sdi2223entrega171.entities.User;
 import com.uniovi.sdi.sdi2223entrega171.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,7 @@ public class UsersService {
         user2.setName(user.getName());
         user2.setSurname(user.getSurname());
         user2.setEmail(user.getEmail());
+        user2.setFavs(user.getFavs());
         usersRepository.save(user2);
     }
 
@@ -67,4 +69,5 @@ public class UsersService {
     public void deleteUser(Long id) {
         usersRepository.deleteById(id);
     }
+
 }

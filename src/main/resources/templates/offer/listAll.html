@@ -25,6 +25,7 @@
         <th scope="col"><span th:text="#{offer.price}"></span></th>
         <th scope="col"></th>
         <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
@@ -39,6 +40,9 @@
         <td th:id="${offer.title} + ${offer.creator.email}" scope="row">
           <a th:href="@{'/chat/' + ${offer.id} + '/' + ${#authentication.principal.username}}" class="btn btn-primary"
             th:text="#{chat.create}"></a>
+        </td>
+
+        <td th:if="${offer.status=='ACTIVE'}" ><a th:href="${'/offers/addFav/'+offer.id}">añadir a favoritos</a>
         </td>
       </tr>
       </tbody>

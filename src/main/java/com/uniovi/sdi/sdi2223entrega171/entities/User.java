@@ -1,6 +1,7 @@
 package com.uniovi.sdi.sdi2223entrega171.entities;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set; //Colección que no admite duplicados
 @Entity
 @Table(name="user")
@@ -18,6 +19,9 @@ public class User {
     private String role;
     private double money;
 
+    public Set<Offer> getFavs(){return favs;}
+    public void setFavs(Set<Offer> favs){this.favs=favs;}
+
     public Set<Offer> getBoughtOffers() {
         return boughtOffers;
     }
@@ -25,6 +29,7 @@ public class User {
     public void setBoughtOffers(Set<Offer> boughtOffers) {
         this.boughtOffers = boughtOffers;
     }
+
 
     public Set<Offer> getSoldOffers() {
         return soldOffers;
@@ -40,6 +45,10 @@ public class User {
     @OneToMany(mappedBy = "creator",cascade = CascadeType.ALL)
     private Set<Offer> soldOffers;
 
+    @ManyToMany
+    private Set<Offer> favs;
+
+
     public User(String email, String name, String surname) {
         super();
         this.email = email;
@@ -54,6 +63,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getPasswordConfirm() {
         return passwordConfirm;
     }
